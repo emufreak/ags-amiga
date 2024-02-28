@@ -74,6 +74,7 @@ bool SDLRendererGraphicsDriver::IsModeSupported(const DisplayMode &mode)
   return true;
 }
 
+
 int SDLRendererGraphicsDriver::GetDisplayDepthForNativeDepth(int /*native_color_depth*/) const
 {
     return 32;
