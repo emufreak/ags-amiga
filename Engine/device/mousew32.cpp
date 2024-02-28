@@ -168,7 +168,11 @@ void Mouse::UnlockFromWindow()
 
 void Mouse::SetMovementControl(bool on)
 {
-#if defined (SDL_HINT_MOUSE_RELATIVE_SPEED_SCALE)
+    Debug::Printf(kDbgMsg_Info, "AMIGA-Change: MouseSpeed control probably has to be off for Amiga");
+
+    ControlEnabled = false;        
+
+/*#if defined (SDL_HINT_MOUSE_RELATIVE_SPEED_SCALE)
     ControlEnabled = on;
     SDL_SetRelativeMouseMode(static_cast<SDL_bool>(on));
     if (on)
@@ -180,17 +184,18 @@ void Mouse::SetMovementControl(bool on)
     if (on)
         Debug::Printf(kDbgMsg_Warn, "WARNING: SDL_HINT_MOUSE_RELATIVE_SPEED_SCALE not supported, mouse control can't be enabled");
 #endif
-    ags_clear_mouse_movement();
+    ags_clear_mouse_movement();*/
 }
 
 bool Mouse::IsControlEnabled()
-{
+{    
     return ControlEnabled;
 }
 
 void Mouse::SetTouch2MouseMode(TouchMouseEmulation mode, bool relative, float speed)
 {
-    ags_touch_set_mouse_emulation(mode, relative, speed);
+     Debug::Printf(kDbgMsg_Info, "AMIGA-Change: SetTouch2MouseMode disabled");
+    //ags_touch_set_mouse_emulation(mode, relative, speed);
 }
 
 void Mouse::SetSpeedUnit(float f)

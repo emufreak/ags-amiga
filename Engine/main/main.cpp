@@ -75,6 +75,7 @@ AGS::Common::Version EngineVersion;
 
 void main_init(int argc, char*argv[])
 {
+    
     set_our_eip(-999);
 
     // Init libraries: set text encoding

@@ -107,20 +107,24 @@ int System_GetHardwareAcceleration()
 
 int System_GetNumLock()
 {
-    SDL_Keymod mod_state = SDL_GetModState();
-    return (mod_state & KMOD_NUM) ? 1 : 0;
+     Debug::Printf(kDbgMsg_Info, "AMIGA-Change: Get Numlock status here");
+    /*SDL_Keymod mod_state = SDL_GetModState();
+    return (mod_state & KMOD_NUM) ? 1 : 0;*/
 }
 
 int System_GetCapsLock()
 {
-    SDL_Keymod mod_state = SDL_GetModState();
-    return (mod_state & KMOD_CAPS) ? 1 : 0;
+    Debug::Printf(kDbgMsg_Info, "AMIGA-Change: Get Capslock status here");
+    /*SDL_Keymod mod_state = SDL_GetModState();
+    return (mod_state & KMOD_CAPS) ? 1 : 0;*/
 }
 
 int System_GetScrollLock()
 {
-    const Uint8 *state = SDL_GetKeyboardState(NULL);
-    return (state[SDL_SCANCODE_SCROLLLOCK]) ? 1 : 0;
+    Debug::Printf(kDbgMsg_Info, "AMIGA: No Scrollock exists on this platform");
+    return 0;
+    /*const Uint8 *state = SDL_GetKeyboardState(NULL);
+    return (state[SDL_SCANCODE_SCROLLLOCK]) ? 1 : 0;*/
 }
 
 int System_GetVsync() {
