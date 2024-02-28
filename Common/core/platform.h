@@ -166,13 +166,7 @@
 #define AGS_PLATFORM_MOBILE ((AGS_PLATFORM_OS_ANDROID) || (AGS_PLATFORM_OS_IOS))
 
 #define AGS_HAS_DIRECT3D (AGS_PLATFORM_OS_WINDOWS)
-#define AGS_HAS_OPENGL (AGS_PLATFORM_OS_WINDOWS    || \
-                        AGS_PLATFORM_OS_ANDROID    || \
-                        AGS_PLATFORM_OS_IOS        || \
-                        AGS_PLATFORM_OS_LINUX      || \
-                        AGS_PLATFORM_OS_EMSCRIPTEN || \
-                        AGS_PLATFORM_OS_FREEBSD    || \
-                        AGS_PLATFORM_OS_MACOS)
+#define AGS_HAS_OPENGL (0)
 #define AGS_OPENGL_ES2 (AGS_PLATFORM_OS_ANDROID    || \
                         AGS_PLATFORM_OS_EMSCRIPTEN || \
                         AGS_PLATFORM_OS_IOS)
