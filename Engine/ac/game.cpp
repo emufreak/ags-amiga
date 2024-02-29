@@ -61,7 +61,6 @@
 #include "gui/guidialog.h"
 #include "main/engine.h"
 #include "media/audio/audio_system.h"
-#include "media/video/video.h"
 #include "platform/base/agsplatformdriver.h"
 #include "platform/base/sys_main.h"
 #include "plugin/plugin_engine.h"
@@ -1287,7 +1286,6 @@ void display_switch_out_suspend()
 
     // TODO: find out if anything has to be done here for SDL backend
 
-    video_pause();
     // Pause all the sounds
     for (int i = 0; i < TOTAL_AUDIO_CHANNELS; i++) {
         auto* ch = AudioChans::GetChannelIfPlaying(i);
@@ -1323,7 +1321,6 @@ void display_switch_in_resume()
             ch->resume();
         }
     }
-    video_resume();
 
     // release render targets if switching back to the full screen mode;
     // unfortunately, otherwise Direct3D fails to reset device when restoring fullscreen.

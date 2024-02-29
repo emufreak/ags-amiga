@@ -55,7 +55,6 @@
 #include "ac/global_textbox.h"
 #include "ac/global_timer.h"
 #include "ac/global_translation.h"
-#include "ac/global_video.h"
 #include "ac/global_viewframe.h"
 #include "ac/global_viewport.h"
 #include "ac/global_walkablearea.h"
@@ -65,7 +64,6 @@
 #include "ac/parser.h"
 #include "ac/string.h"
 #include "ac/room.h"
-#include "media/video/video.h"
 #include "util/string_compat.h"
 #include "media/audio/audio_system.h"
 
@@ -1192,7 +1190,7 @@ RuntimeScriptValue Sc_PlayAmbientSound(const RuntimeScriptValue *params, int32_t
 // void (int numb,int playflags)
 RuntimeScriptValue Sc_PlayFlic(const RuntimeScriptValue *params, int32_t param_count)
 {
-    API_SCALL_VOID_PINT2(PlayFlic);
+    //API_SCALL_VOID_PINT2(PlayFlic);
 }
 
 // void  (char *filename)
@@ -1234,7 +1232,7 @@ RuntimeScriptValue Sc_PlaySoundEx(const RuntimeScriptValue *params, int32_t para
 // void (const char* name, int skip, int flags)
 RuntimeScriptValue Sc_PlayVideo(const RuntimeScriptValue *params, int32_t param_count)
 {
-    API_SCALL_VOID_POBJ_PINT2(PlayVideo, const char);
+    //API_SCALL_VOID_POBJ_PINT2(PlayVideo, const char);
 }
 
 // void (int dialog)
@@ -2502,14 +2500,14 @@ void RegisterGlobalAPI()
         { "ParseText",                API_FN_PAIR(ParseText) },
         { "PauseGame",                API_FN_PAIR(PauseGame) },
         { "PlayAmbientSound",         API_FN_PAIR(PlayAmbientSound) },
-        { "PlayFlic",                 API_FN_PAIR(PlayFlic) },
+        //{ "PlayFlic",                 API_FN_PAIR(PlayFlic) },
         { "PlayMP3File",              API_FN_PAIR(PlayMP3File) },
         { "PlayMusic",                API_FN_PAIR(PlayMusicResetQueue) },
         { "PlayMusicQueued",          API_FN_PAIR(PlayMusicQueued) },
         { "PlaySilentMIDI",           API_FN_PAIR(PlaySilentMIDI) },
         { "PlaySound",                API_FN_PAIR(play_sound) },
         { "PlaySoundEx",              API_FN_PAIR(PlaySoundEx) },
-        { "PlayVideo",                API_FN_PAIR(PlayVideo) },
+        //{ "PlayVideo",                API_FN_PAIR(PlayVideo) },
         { "QuitGame",                 API_FN_PAIR(QuitGame) },
         { "Random",                   Sc_Rand, __Rand },
         { "RawClearScreen",           API_FN_PAIR(RawClear) },

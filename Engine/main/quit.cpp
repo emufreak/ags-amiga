@@ -46,7 +46,6 @@
 #include "plugin/plugin_engine.h"
 #include "script/cc_common.h"
 #include "media/audio/audio_system.h"
-#include "media/video/video.h"
 
 using namespace AGS::Common;
 using namespace AGS::Engine;
@@ -208,7 +207,7 @@ void quit(const char *quitmsg)
 
     set_our_eip(9019);
 
-    video_shutdown();
+    //video_shutdown();
     quit_shutdown_audio();
 
     set_our_eip(9908);

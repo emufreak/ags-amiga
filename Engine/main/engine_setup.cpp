@@ -32,7 +32,6 @@
 #include "main/game_run.h"
 #include "main/graphics_mode.h"
 #include "main/engine_setup.h"
-#include "media/video/video.h"
 #include "platform/base/agsplatformdriver.h"
 #include "platform/base/sys_main.h"
 
@@ -192,7 +191,7 @@ void engine_post_gfxmode_setup(const Size &init_desktop, const DisplayMode &old_
     // reset multitasking (may be overridden by the current display mode)
     SetMultitasking(usetup.multitasking);
 
-    video_on_gfxmode_changed();
+    //video_on_gfxmode_changed();
     invalidate_screen();
 }
 

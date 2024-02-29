@@ -30,7 +30,6 @@
 #include "ac/global_hotspot.h"
 #include "ac/global_object.h"
 #include "ac/global_room.h"
-#include "ac/global_video.h"
 #include "ac/invwindow.h"
 #include "ac/mouse.h"
 #include "ac/room.h"
@@ -816,7 +815,7 @@ int run_interaction_commandlist(const ObjectEvent &obj_evt, InteractionCommandLi
           play_sound (IPARAM1);
           break;
       case 8:  // Play Flic
-          PlayFlic(IPARAM1, IPARAM2);
+          //PlayFlic(IPARAM1, IPARAM2);
           break;
       case 9:  // Run Dialog
           RunDialog(IPARAM1);
