@@ -397,8 +397,6 @@ target_sources(engine
     media/audio/sound.h
     media/audio/soundclip.cpp
     media/audio/soundclip.h
-    media/video/video.cpp
-    media/video/video.h
     platform/base/agsplatformdriver.cpp
     platform/base/agsplatformdriver.h
     platform/base/agsplatform_xdg_unix.cpp
