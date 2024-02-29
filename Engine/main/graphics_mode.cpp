@@ -81,14 +81,14 @@ bool create_gfx_driver(const String &gfx_driver_id)
     GfxFactory = GetGfxDriverFactory(gfx_driver_id);
     if (!GfxFactory)
     {
-        Debug::Printf(kDbgMsg_Error, "Failed to initialize %s graphics factory. Error: %s", gfx_driver_id.GetCStr(), SDL_GetError());
+        Debug::Printf(kDbgMsg_Error, "Failed to initialize %s graphics factory.", gfx_driver_id.GetCStr());
         return false;
     }
     Debug::Printf("Using graphics factory: %s", gfx_driver_id.GetCStr());
     gfxDriver = GfxFactory->GetDriver();
     if (!gfxDriver)
     {
-        Debug::Printf(kDbgMsg_Error, "Failed to create graphics driver. Error: %s", SDL_GetError());
+        Debug::Printf(kDbgMsg_Error, "Failed to create graphics driver.");
         return false;
     }
     Debug::Printf("Created graphics driver: %s", gfxDriver->GetDriverName());
@@ -410,10 +410,9 @@ void display_gfx_mode_error(const Size &game_size, const WindowSetup &ws, const 
             game_size.Width, game_size.Height, color_depth, filter_setup.UserRequest.IsEmpty() ? "Undefined" : filter_setup.UserRequest.GetCStr());
 
     platform->DisplayAlert("%s\n"
-            "(Problem: '%s')\n"
             "Try to correct the problem, or seek help from the AGS homepage."
             "%s",
-            main_error.GetCStr(), SDL_GetError(), platform->GetGraphicsTroubleshootingText());
+            main_error.GetCStr(), platform->GetGraphicsTroubleshootingText());
 }
 
 bool graphics_mode_init_any(const GraphicResolution &game_res, const DisplayModeSetup &setup, const ColorDepthOption &color_depth)
@@ -513,7 +512,7 @@ bool graphics_mode_set_dm(const DisplayMode &dm)
 
     if (!gfxDriver->SetDisplayMode(dm))
     {
-        Debug::Printf(kDbgMsg_Error, "Failed to init gfx mode. Error: %s", SDL_GetError());
+        Debug::Printf(kDbgMsg_Error, "Failed to init gfx mode.");
         return false;
     }
 
@@ -546,9 +545,9 @@ bool graphics_mode_update_render_frame()
 
     if (!gfxDriver->SetRenderFrame(render_frame))
     {
-        Debug::Printf(kDbgMsg_Error, "Failed to set render frame (%d, %d, %d, %d : %d x %d). Error: %s", 
+        Debug::Printf(kDbgMsg_Error, "Failed to set render frame (%d, %d, %d, %d : %d x %d).", 
             render_frame.Left, render_frame.Top, render_frame.Right, render_frame.Bottom,
-            render_frame.GetWidth(), render_frame.GetHeight(), SDL_GetError());
+            render_frame.GetWidth(), render_frame.GetHeight());
         return false;
     }
 

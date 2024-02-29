@@ -231,7 +231,8 @@ static void toggle_mouse_lock()
 
 bool run_service_mb_controls(eAGSMouseButton &out_mbut)
 {
-    out_mbut = kMouseNone; // clear the output
+    Debug::Printf(kDbgMsg_Info, "AMIGA: run_service_mb_controls currently not implemented");
+    /*out_mbut = kMouseNone; // clear the output
     if (ags_inputevent_ready() != kInputMouse)
         return false; // there was no mouse event
 
@@ -241,7 +242,7 @@ bool run_service_mb_controls(eAGSMouseButton &out_mbut)
         out_mbut = sdl_mbut_to_ags_but(mb_evt.button.button);
         lock_mouse_on_click();
     }
-    return out_mbut != kMouseNone;
+    return out_mbut != kMouseNone;*/
 }
 
 static eAGSMouseButton wasbutdown = kMouseNone;
@@ -249,7 +250,7 @@ static int wasongui = 0;
 
 // Runs default handling of mouse movement, button state, and wheel
 static void check_mouse_state(int &was_mouse_on_iface)
-{
+{    
     mouse_on_iface = gui_on_mouse_move();
     was_mouse_on_iface = mouse_on_iface;
 
@@ -314,7 +315,9 @@ static void check_mouse_controls(const int was_mouse_on_iface)
 //   - key + mod combos are merged into one key code for the script callback.
 bool run_service_key_controls(KeyInput &out_key)
 {
-    out_key = KeyInput(); // clear the output
+    Debug::Printf(kDbgMsg_Info, "AMIGA: run_service_key_controls currently not implemented");
+
+    /*out_key = KeyInput(); // clear the output
     if (ags_inputevent_ready() != kInputKeyboard)
         return false; // there was no key event
 
@@ -465,7 +468,8 @@ bool run_service_key_controls(KeyInput &out_key)
 
     // No service operation triggered? return active keypress and mods to caller
     out_key = ki;
-    return true;
+    return true;*/
+    return false;
 }
 
 // Runs default keyboard handling

@@ -69,15 +69,15 @@ private:
     std::unique_ptr<OpenAlSource> _source;
     PlaybackState _playState = PlayStateInitial;
     PlaybackState _onLoadPlayState = PlayStatePaused;
-    float _onLoadPositionMs = 0.0f;
+    float _onLoadPositionMs = 0.
     SoundBuffer _bufferPending{};
 };
 
 AudioCoreSlot::AudioCoreSlot(int handle, std::unique_ptr<SDLDecoder> decoder)
     : handle_(handle), _decoder(std::move(decoder))
 {
-    _source = std::make_unique<OpenAlSource>(
-        _decoder->GetFormat(), _decoder->GetChannels(), _decoder->GetFreq());
+    /*_source = std::make_unique<OpenAlSource>(
+        _decoder->GetFormat(), _decoder->GetChannels(), _decoder->GetFreq());*/
 }
 
 void AudioCoreSlot::Init()

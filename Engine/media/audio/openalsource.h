@@ -38,7 +38,7 @@ public:
 
     // Initializes Al source for the given format; if there's no direct format equivalent
     // found, setups a resampler.
-    OpenAlSource(SDL_AudioFormat format, int channels, int freq);
+    //OpenAlSource(SDL_AudioFormat format, int channels, int freq);
     OpenAlSource(OpenAlSource&& src);
     ~OpenAlSource();
 

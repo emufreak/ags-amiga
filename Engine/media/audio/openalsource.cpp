@@ -95,7 +95,7 @@ static struct
 // OpenAlSource
 //-----------------------------------------------------------------------------
 
-OpenAlSource::OpenAlSource(SDL_AudioFormat format, int channels, int freq)
+/*OpenAlSource::OpenAlSource(SDL_AudioFormat format, int channels, int freq)
 {
     _inputFmt.format = format;
     _inputFmt.channels = static_cast<Uint8>(channels);
@@ -104,7 +104,7 @@ OpenAlSource::OpenAlSource(SDL_AudioFormat format, int channels, int freq)
     alGenSources(1, &_source);
     dump_al_errors();
     _resampler.Setup(_inputFmt, _recvFmt);
-}
+}*/
 
 OpenAlSource::OpenAlSource(OpenAlSource&& src)
 {

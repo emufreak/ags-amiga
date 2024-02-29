@@ -72,8 +72,8 @@ HError VideoPlayer::Open(const String &name, int flags)
     if ((flags & kVideo_EnableAudio) != 0)
     {
         if ((_audioFormat > 0) && (_audioChannels > 0) && (_audioFreq > 0))
-        {
-            _audioOut.reset(new OpenAlSource(_audioFormat, _audioChannels, _audioFreq));
+        {            
+            //_audioOut.reset(new OpenAlSource(_audioFormat, _audioChannels, _audioFreq));
             _audioOut->Play();
             _wantAudio = true;
         }
