@@ -98,7 +98,8 @@ bool create_gfx_driver(const String &gfx_driver_id)
 // Set requested graphics filter, or default filter if the requested one failed
 bool graphics_mode_set_filter_any(const GfxFilterSetup &setup)
 {
-    Debug::Printf("Requested gfx filter: %s", setup.UserRequest.GetCStr());
+    Debug::Printf(kDbgMsg_Info, "AMIGA: graphics_mode_set_filter_any Currently not implemented");
+    /*Debug::Printf("Requested gfx filter: %s", setup.UserRequest.GetCStr());
     if (!graphics_mode_set_filter(setup.ID))
     {
         String def_filter = GfxFactory->GetDefaultFilterID();
@@ -110,7 +111,9 @@ bool graphics_mode_set_filter_any(const GfxFilterSetup &setup)
             return false;
     }
     Debug::Printf("Using gfx filter: %s", GfxFactory->GetDriver()->GetGraphicsFilter()->GetInfo().Id.GetCStr());
+    return true;*/
     return true;
+    
 }
 
 bool find_nearest_supported_mode(const IGfxModeList &modes, const Size &wanted_size, const int color_depth,
@@ -589,7 +592,8 @@ bool graphics_mode_set_render_frame(const FrameScaleDef frame)
 
 bool graphics_mode_set_filter(const String &filter_id)
 {
-    if (!GfxFactory)
+    Debug::Printf(kDbgMsg_Info, "AMIGA: graphics_mode_set_filter Currently not implemented");
+    /*if (!GfxFactory)
         return false;
 
     String filter_error;
@@ -602,6 +606,7 @@ bool graphics_mode_set_filter(const String &filter_id)
     Rect filter_rect  = filter->GetDestination();
     Debug::Printf("Graphics filter set: '%s', filter dest (%d, %d, %d, %d : %d x %d)", filter->GetInfo().Id.GetCStr(),
         filter_rect.Left, filter_rect.Top, filter_rect.Right, filter_rect.Bottom, filter_rect.GetWidth(), filter_rect.GetHeight());
+    return true;*/
     return true;
 }
 

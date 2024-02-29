@@ -45,7 +45,9 @@ extern IGraphicsDriver *gfxDriver;
 
 void engine_adjust_for_rotation_settings()
 {
-    switch (usetup.rotation) {
+    Debug::Printf(kDbgMsg_Info, "AMIGA: engine_adjust_for_rotation_settings() currently not implemented");
+
+    /*switch (usetup.rotation) {
         case ScreenRotation::kScreenRotation_Portrait:
             SDL_SetHint(SDL_HINT_ORIENTATIONS, "Portrait PortraitUpsideDown");
             break;
@@ -56,7 +58,7 @@ void engine_adjust_for_rotation_settings()
             // let the user rotate as wished. No adjustment needed.
         default:
             break;
-    }
+    }*/
 }
 
 // Setup gfx driver callbacks and options

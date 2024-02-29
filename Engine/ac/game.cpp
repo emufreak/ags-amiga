@@ -948,8 +948,9 @@ void save_game(int slotn, const char*descript) {
     VALIDATE_STRING(descript);
     String nametouse = get_save_game_path(slotn);
     std::unique_ptr<Bitmap> screenShot;
-    if (game.options[OPT_SAVESCREENSHOT] != 0)
-        screenShot.reset(create_savegame_screenshot());
+    //AMIGA ToDo: Maybe reactivate?
+    /*if (game.options[OPT_SAVESCREENSHOT] != 0)        
+        screenShot.reset(create_savegame_screenshot());*/
 
     std::unique_ptr<Stream> out(StartSavegame(nametouse, descript, screenShot.get()));
     if (out == nullptr)

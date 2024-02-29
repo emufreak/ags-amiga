@@ -937,7 +937,7 @@ void UpdateGameOnce(bool checkControls, IDriverDependantBitmap *extraBitmap, int
     update_audio_system_on_game_loop();
 
     // Only render if we are not skipping a cutscene
-    if (!play.fast_forward)
+    if (!play.fast_forward)        
         render_graphics(extraBitmap, extraX, extraY);
 
     set_our_eip(6);

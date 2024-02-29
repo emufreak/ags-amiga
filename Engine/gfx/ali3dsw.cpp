@@ -701,7 +701,7 @@ void SDLRendererGraphicsDriver::SetMemoryBackBuffer(Bitmap *backBuffer)
     // in which case the Bitmap object may be a different wrapper over our own virtual screen.
     /*if (backBuffer && (backBuffer->GetAllegroBitmap() != _origVirtualScreen->GetAllegroBitmap()))
     {
-        virtualScreen = backBuffer;
+        virtualScreen = virtualScreen;
     }
     else
     {
