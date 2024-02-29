@@ -191,8 +191,6 @@ target_sources(engine
     ac/global_timer.h
     ac/global_translation.cpp
     ac/global_translation.h
-    ac/global_video.cpp
-    ac/global_video.h
     ac/global_viewframe.cpp
     ac/global_viewframe.h
     ac/global_viewport.cpp
