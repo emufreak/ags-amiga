@@ -38,17 +38,6 @@ static uint32_t _trans_alpha_blender32(uint32_t x, uint32_t y, uint32_t n);
 // SDLRendererGraphicsDriver
 // ----------------------------------------------------------------------------
 
-#if SDL_VERSION_ATLEAST(2, 0, 5)
-// used to add alpha back to rendered screen.
-static auto fix_alpha_blender = SDL_ComposeCustomBlendMode(
-    SDL_BLENDFACTOR_ZERO,
-    SDL_BLENDFACTOR_ONE,
-    SDL_BLENDOPERATION_ADD,
-    SDL_BLENDFACTOR_ONE,
-    SDL_BLENDFACTOR_ZERO,
-    SDL_BLENDOPERATION_ADD
-);
-#endif
 
 SDLRendererGraphicsDriver::SDLRendererGraphicsDriver()
 {
@@ -61,7 +50,7 @@ SDLRendererGraphicsDriver::SDLRendererGraphicsDriver()
 }
 
 bool SDLRendererGraphicsDriver::IsModeSupported(const DisplayMode &mode)
-{
+{/* AMIGA
   if (mode.Width <= 0 || mode.Height <= 0)
   {
     SDL_SetError("Invalid resolution parameters: %d x %d", mode.Width, mode.Height);
@@ -70,7 +59,7 @@ bool SDLRendererGraphicsDriver::IsModeSupported(const DisplayMode &mode)
   if (mode.ColorDepth != 32) {
     SDL_SetError("Display colour depth not supported: %d", mode.ColorDepth);
     return false;
-  }
+  }*/
   return true;
 }
 
@@ -100,13 +89,15 @@ PGfxFilter SDLRendererGraphicsDriver::GetGraphicsFilter() const
 
 void SDLRendererGraphicsDriver::SetGraphicsFilter(PSDLRenderFilter filter)
 {
-  _filter = filter;
+  Debug::Printf(kDbgMsg_Info, "AMIGA: Setup SetGraphicsFilter Currently not implemented");
+  /*_filter = filter;Debug::Printf(kDbgMsg_Info, "AMIGA: CreateVirtualScreen. Is this some Drawbuffer?");
   OnSetFilter();
 
   // TODO: support separate nearest and linear filters, initialize hint by calls to filter object
   // e.g like D3D and OGL filters act
   SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
   // SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");  // make the scaled rendering look smoother.
+  */
 }
 
 void SDLRendererGraphicsDriver::SetTintMethod(TintMethod /*method*/) 
@@ -116,7 +107,10 @@ void SDLRendererGraphicsDriver::SetTintMethod(TintMethod /*method*/)
 
 bool SDLRendererGraphicsDriver::SetDisplayMode(const DisplayMode &mode)
 {
-  ReleaseDisplayMode();
+
+  Debug::Printf(kDbgMsg_Info, "AMIGA: AGRaphicsDriver:SetDisplayMode Currently not implemented");
+  
+  /*ReleaseDisplayMode();
 
   set_color_depth(mode.ColorDepth);
 
@@ -169,7 +163,7 @@ bool SDLRendererGraphicsDriver::SetDisplayMode(const DisplayMode &mode)
 #endif
 
   OnInit();
-  OnModeSet(mode);
+  OnModeSet(mode);*/
   return true;
 }
 
@@ -184,7 +178,9 @@ void SDLRendererGraphicsDriver::UpdateDeviceScreen(const Size &screen_sz)
 
 void SDLRendererGraphicsDriver::CreateVirtualScreen()
 {
-  if (!IsNativeSizeValid())
+  Debug::Printf(kDbgMsg_Info, "AMIGA: AGraphicsDriver:CreateVirtualScreen Currently not implemented");
+  
+  /*if (!IsNativeSizeValid())
     return;
   DestroyVirtualScreen();
   // Initialize virtual screen; size is equal to native resolution
@@ -216,11 +212,13 @@ void SDLRendererGraphicsDriver::CreateVirtualScreen()
   destroy_bitmap(tmpbitmap);
 
   _lastTexPixels = nullptr;
-  _lastTexPitch = -1;
+  _lastTexPitch = -1;*/
 }
 
 void SDLRendererGraphicsDriver::DestroyVirtualScreen()
 {
+  Debug::Printf(kDbgMsg_Info, "AMIGA: AGRaphicsDriver:DestroyVirtualScreen Currently not implemented");
+
   delete[] _fakeTexBitmap; // don't use destroy_bitmap(), because it's a fake structure
   _fakeTexBitmap = nullptr;
   if(_screenTex != nullptr) {
@@ -271,12 +269,6 @@ void SDLRendererGraphicsDriver::UnInit()
   ReleaseDisplayMode();
   DestroyVirtualScreen();
 
-  if (_renderer)
-  {
-      SDL_DestroyRenderer(_renderer);
-      _renderer = nullptr;
-  }
-
   sys_window_destroy();
 }
 
@@ -287,6 +279,8 @@ bool SDLRendererGraphicsDriver::SupportsGammaControl()
 
 void SDLRendererGraphicsDriver::SetGamma(int newGamma)
 {
+  Debug::Printf(kDbgMsg_Info, "AMIGA: AGRaphicsDriver:SetGamma Currently not implemented");
+  /*
   if (!_hasGamma) { return; }
 
   Uint16 gamma_red[256];
@@ -301,7 +295,7 @@ void SDLRendererGraphicsDriver::SetGamma(int newGamma)
 
   _gamma = newGamma;
 
-  SDL_SetWindowGammaRamp(sys_get_window(), gamma_red, gamma_green, gamma_blue);
+  SDL_SetWindowGammaRamp(sys_get_window(), gamma_red, gamma_green, gamma_blue);*/
 }
 
 int SDLRendererGraphicsDriver::GetCompatibleBitmapFormat(int color_depth)
@@ -614,6 +608,9 @@ size_t SDLRendererGraphicsDriver::RenderSpriteBatch(const ALSpriteBatch &batch, 
 
 void SDLRendererGraphicsDriver::BlitToTexture()
 {
+  Debug::Printf(kDbgMsg_Info, "AMIGA: AGRaphicsDriver:BlitToTexture Currently not implemented");
+  
+    /*
     void *pixels = nullptr;
     int pitch = 0;
     auto res = SDL_LockTexture(_screenTex, NULL, &pixels, &pitch);
@@ -637,11 +634,14 @@ void SDLRendererGraphicsDriver::BlitToTexture()
 
     blit(virtualScreen->GetAllegroBitmap(), _fakeTexBitmap, 0, 0, 0, 0, vwidth, vheight);
 
-    SDL_UnlockTexture(_screenTex);
+    SDL_UnlockTexture(_screenTex);*/
 }
 
 void SDLRendererGraphicsDriver::Present(int xoff, int yoff, GraphicFlip flip)
 {
+    Debug::Printf(kDbgMsg_Info, "AMIGA: AGRaphicsDriver:Present Currently not implemented");
+  
+    /*
     if (!_renderer) { return; }
 
     SDL_RendererFlip sdl_flip;
@@ -668,7 +668,7 @@ void SDLRendererGraphicsDriver::Present(int xoff, int yoff, GraphicFlip flip)
     dst.h = _dstRect.GetHeight();
     SDL_RenderCopyEx(_renderer, _screenTex, nullptr, &dst, 0.0, nullptr, sdl_flip);
 
-    SDL_RenderPresent(_renderer);
+    SDL_RenderPresent(_renderer);*/
 }
 
 void SDLRendererGraphicsDriver::Render(int xoff, int yoff, GraphicFlip flip)
@@ -696,9 +696,10 @@ Bitmap *SDLRendererGraphicsDriver::GetMemoryBackBuffer()
 
 void SDLRendererGraphicsDriver::SetMemoryBackBuffer(Bitmap *backBuffer)
 {
+    Debug::Printf(kDbgMsg_Info, "AMIGA: AGRaphicsDriver:SetMemoryBackBuffer Currently not implemented");
     // We need to also test internal AL BITMAP pointer, because we may receive it raw from plugin,
     // in which case the Bitmap object may be a different wrapper over our own virtual screen.
-    if (backBuffer && (backBuffer->GetAllegroBitmap() != _origVirtualScreen->GetAllegroBitmap()))
+    /*if (backBuffer && (backBuffer->GetAllegroBitmap() != _origVirtualScreen->GetAllegroBitmap()))
     {
         virtualScreen = backBuffer;
     }
@@ -717,7 +718,7 @@ void SDLRendererGraphicsDriver::SetMemoryBackBuffer(Bitmap *backBuffer)
     {
         if (batch.IsParentRegion)
             batch.Surface.reset();
-    }
+    }*/
 }
 
 Bitmap *SDLRendererGraphicsDriver::GetStageBackBuffer(bool /*mark_dirty*/)
@@ -727,7 +728,9 @@ Bitmap *SDLRendererGraphicsDriver::GetStageBackBuffer(bool /*mark_dirty*/)
 
 void SDLRendererGraphicsDriver::SetStageBackBuffer(Bitmap *backBuffer)
 {
-    Bitmap *cur_stage = (_rendSpriteBatch == UINT32_MAX) ?
+    Debug::Printf(kDbgMsg_Info, "AMIGA: AGRaphicsDriver:SetMemoryBackBuffer Currently not implemented");
+
+    /*Bitmap *cur_stage = (_rendSpriteBatch == UINT32_MAX) ?
         virtualScreen :
         _spriteBatches[_rendSpriteBatch].Surface.get();
     // We need to also test internal AL BITMAP pointer, because we may receive it raw from plugin,
@@ -735,7 +738,7 @@ void SDLRendererGraphicsDriver::SetStageBackBuffer(Bitmap *backBuffer)
     if (backBuffer && (backBuffer->GetAllegroBitmap() != cur_stage->GetAllegroBitmap()))
         _stageVirtualScreen = backBuffer;
     else
-        _stageVirtualScreen = cur_stage;
+        _stageVirtualScreen = cur_stage;*/
 }
 
 void SDLRendererGraphicsDriver::GetCopyOfScreenIntoDDB(IDriverDependantBitmap *target)
@@ -792,7 +795,9 @@ static uint32_t _trans_alpha_blender32(uint32_t x, uint32_t y, uint32_t n)
 
 bool SDLRendererGraphicsDriver::SetVsyncImpl(bool enabled, bool &vsync_res)
 {
-    #if SDL_VERSION_ATLEAST(2, 0, 18)
+    Debug::Printf(kDbgMsg_Info, "AMIGA: AGRaphicsDriver:SetVsyncImpl Currently not implemented");
+
+    /*#if SDL_VERSION_ATLEAST(2, 0, 18)
     if (SDL_RenderSetVSync(_renderer, enabled) == 0) // 0 on success
     {
         // gamma might be lost after changing vsync mode at fullscreen
@@ -804,7 +809,8 @@ bool SDLRendererGraphicsDriver::SetVsyncImpl(bool enabled, bool &vsync_res)
     }
     Debug::Printf(kDbgMsg_Warn, "SDLRenderer: SetVsync (%d) failed: %s", enabled, SDL_GetError());
     #endif
-    return false;
+    return false;*/
+    return true;
 }
 
 SDLRendererGraphicsFactory *SDLRendererGraphicsFactory::_factory = nullptr;

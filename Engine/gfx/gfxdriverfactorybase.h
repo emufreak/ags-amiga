@@ -48,7 +48,7 @@ public:
     }
 
     IGraphicsDriver *GetDriver() override
-    {
+    {        
         if (!_driver)
             _driver = EnsureDriverCreated();
         return _driver;
