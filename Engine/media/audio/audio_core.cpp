@@ -69,7 +69,7 @@ private:
     std::unique_ptr<OpenAlSource> _source;
     PlaybackState _playState = PlayStateInitial;
     PlaybackState _onLoadPlayState = PlayStatePaused;
-    float _onLoadPositionMs = 0.
+    float _onLoadPositionMs = 0;
     SoundBuffer _bufferPending{};
 };
 
