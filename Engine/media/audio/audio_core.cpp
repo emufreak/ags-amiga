@@ -43,11 +43,11 @@ public:
     // Gets duration, in ms
     float GetDurationMs() const { return _decoder->GetDurationMs(); }
     // Gets playback position, in ms
-    float GetPositionMs() const { return _source->GetPositionMs(); }
+    float GetPositionMs() const { /*eturn _source->GetPositionMs();*/ }
     // Gives access to decoder object
     SDLDecoder &GetDecoder() const { return *_decoder; }
     // Gives access to the "player" object
-    OpenAlSource &GetAlSource() const { return *_source; }
+    //OpenAlSource &GetAlSource() const { return *_source; }
 
     // Update state, transfer data from decoder to player if possible
     void Poll();
@@ -66,7 +66,7 @@ private:
 
     int handle_ = -1;
     std::unique_ptr<SDLDecoder> _decoder;
-    std::unique_ptr<OpenAlSource> _source;
+    //std::unique_ptr<OpenAlSource> _source;
     PlaybackState _playState = PlayStateInitial;
     PlaybackState _onLoadPlayState = PlayStatePaused;
     float _onLoadPositionMs = 0;
@@ -76,25 +76,28 @@ private:
 AudioCoreSlot::AudioCoreSlot(int handle, std::unique_ptr<SDLDecoder> decoder)
     : handle_(handle), _decoder(std::move(decoder))
 {
+    Debug::Printf(kDbgMsg_Info, "AMIGA: AudioCoreSlot:AudioCoreSlot() Currently not implemented");
     /*_source = std::make_unique<OpenAlSource>(
         _decoder->GetFormat(), _decoder->GetChannels(), _decoder->GetFreq());*/
 }
 
 void AudioCoreSlot::Init()
 {
-    bool success;
+    Debug::Printf(kDbgMsg_Info, "AMIGA: AudioCoreSlot::Init()");
+    /*bool success;
     if (_decoder->IsValid()) // if already opened, then just seek to start
         success = _decoder->Seek(_onLoadPositionMs) == _onLoadPositionMs;
     else
         success = _decoder->Open(_onLoadPositionMs);
     _playState = success ? _onLoadPlayState : PlayStateError;
-    if (_playState == PlayStatePlaying)
-        _source->Play();
+    if (_playState == PlayStatePlaying)*/
+        //_source->Play();
 }
 
 void AudioCoreSlot::Poll()
 {
-    if (_playState == PlaybackState::PlayStateInitial)
+    Debug::Printf(kDbgMsg_Info, "AMIGA: AudioCoreSlot::Poll()");
+    /*if (_playState == PlaybackState::PlayStateInitial)
         Init();
     if (_playState != PlayStatePlaying)
         return;
@@ -115,31 +118,34 @@ void AudioCoreSlot::Poll()
     if (_decoder->EOS() && _source->IsEmpty())
     {
         _playState = PlayStateFinished;
-    }
+    }*/
 }
 
 void AudioCoreSlot::Play()
 {
+    Debug::Printf(kDbgMsg_Info, "AMIGA: AudioCoreSlot::Play() currently not implemented");
+    /*
     switch (_playState)
     {
     case PlayStateInitial:
         _onLoadPlayState = PlayStatePlaying;
         break;
     case PlayStateStopped:
-        _decoder->Seek(0.0f);
+        _decoder->Seek(0.0f);*/
         /* fall-through */
-    case PlayStatePaused:
+    /*case PlayStatePaused:
         _playState = PlayStatePlaying;
         _source->Play();
         break;
     default:
         break;
-    }
+    }*/
 }
 
 void AudioCoreSlot::Pause()
 {
-    switch (_playState)
+    Debug::Printf(kDbgMsg_Info, "AMIGA: AudioCoreSlot::Pause()");
+    /*switch (_playState)
     {
     case PlayStateInitial:
         _onLoadPlayState = PlayStatePaused;
@@ -150,12 +156,13 @@ void AudioCoreSlot::Pause()
         break;
     default:
         break;
-    }
+    }*/
 }
 
 void AudioCoreSlot::Stop()
 {
-    switch (_playState)
+    Debug::Printf(kDbgMsg_Info, "AMIGA: AudioCoreSlot::Stop()");
+    /*switch (_playState)
     {
     case PlayStateInitial:
         _onLoadPlayState = PlayStateStopped;
@@ -168,12 +175,13 @@ void AudioCoreSlot::Stop()
         break;
     default:
         break;
-    }
+    }*/
 }
 
 void AudioCoreSlot::Seek(float pos_ms)
 {
-    switch (_playState)
+    Debug::Printf(kDbgMsg_Info, "AMIGA: AudioCoreSlot::Seek()");
+    /*switch (_playState)
     {
     case PlayStateInitial:
         _onLoadPositionMs = pos_ms;
@@ -190,7 +198,7 @@ void AudioCoreSlot::Seek(float pos_ms)
         break;
     default:
         break;
-    }
+    }*/
 }
 
 
@@ -198,9 +206,9 @@ void AudioCoreSlot::Seek(float pos_ms)
 static struct 
 {
     // Device handle (could be a real hardware, or a service/server)
-    ALCdevice *alcDevice = nullptr;
+    //ALCdevice *alcDevice = nullptr;
     // Context handle (all OpenAL operations are performed using the current context)
-    ALCcontext *alcContext = nullptr;
+    //ALCcontext *alcContext = nullptr;
 
     // Audio thread: polls sound decoders, feeds OpenAL sources
     std::thread audio_core_thread;
@@ -220,10 +228,10 @@ static struct
 // Prints any OpenAL errors to the log
 void dump_al_errors()
 {
-    auto err = alGetError();
+    /*auto err = alGetError();
     if (err == AL_NO_ERROR) { return; }
     Debug::Printf(kDbgMsg_Error, "OpenAL Error: %s", alGetString(err));
-    assert(err == AL_NO_ERROR);
+    assert(err == AL_NO_ERROR);*/
 }
 
 // -------------------------------------------------------------------------------------------------
@@ -232,11 +240,12 @@ void dump_al_errors()
 
 void audio_core_init() 
 {
+    Debug::Printf(kDbgMsg_Info, "AMIGA: AudioCoreSlot::Seek()");
     /* InitAL opens a device and sets up a context using default attributes, making
      * the program ready to call OpenAL functions. */
 
     /* Open and initialize a device */
-    g_acore.alcDevice = alcOpenDevice(nullptr);
+    /*g_acore.alcDevice = alcOpenDevice(nullptr);
     if (!g_acore.alcDevice) { throw std::runtime_error("AudioCore: error opening device"); }
 
     g_acore.alcContext = alcCreateContext(g_acore.alcDevice, nullptr);
@@ -265,12 +274,13 @@ void audio_core_init()
     g_acore.audio_core_thread_running = true;
 #if !defined(AGS_DISABLE_THREADS)
     g_acore.audio_core_thread = std::thread(audio_core_entry);
-#endif
+#endif*/
 }
 
 void audio_core_shutdown()
 {
-    g_acore.audio_core_thread_running = false;
+    Debug::Printf(kDbgMsg_Info, "AMIGA: audio_core_shutdown");
+    /*g_acore.audio_core_thread_running = false;
 #if !defined(AGS_DISABLE_THREADS)
     if (g_acore.audio_core_thread.joinable())
         g_acore.audio_core_thread.join();
@@ -291,7 +301,7 @@ void audio_core_shutdown()
     if (g_acore.alcDevice) {
         alcCloseDevice(g_acore.alcDevice);
         g_acore.alcDevice = nullptr;
-    }
+    }*/
 }
 
 
@@ -301,32 +311,36 @@ void audio_core_shutdown()
 
 static int avail_slot_id()
 {
-    return g_acore.nextId++;
+    Debug::Printf(kDbgMsg_Info, "AMIGA: avail_slot_id currently not implemented");
+    //return g_acore.nextId++;
 }
 
 static int audio_core_slot_init(std::unique_ptr<SDLDecoder> decoder)
 {
-    auto handle = avail_slot_id();
+    Debug::Printf(kDbgMsg_Info, "AMIGA: audio_core_slot_init currently not implemented");
+    /*auto handle = avail_slot_id();
     std::lock_guard<std::mutex> lk(g_acore.mixer_mutex_m);
     g_acore.slots_[handle] = std::make_unique<AudioCoreSlot>(handle, std::move(decoder));
     g_acore.mixer_cv.notify_all();
-    return handle;
+    return handle;*/
 }
 
 int audio_core_slot_init(std::shared_ptr<std::vector<uint8_t>> &data, const String &extension_hint, bool repeat)
 {
-    auto decoder = std::make_unique<SDLDecoder>(data, extension_hint, repeat);
+    Debug::Printf(kDbgMsg_Info, "AMIGA: audio_core_slot_init currently not implemented");
+    /*auto decoder = std::make_unique<SDLDecoder>(data, extension_hint, repeat);
     if (!decoder->Open())
         return -1;
-    return audio_core_slot_init(std::move(decoder));
+    return audio_core_slot_init(std::move(decoder));*/
 }
 
 int audio_core_slot_init(std::unique_ptr<Stream> in, const String &extension_hint, bool repeat)
 {
-    auto decoder = std::make_unique<SDLDecoder>(std::move(in), extension_hint, repeat);
+    Debug::Printf(kDbgMsg_Info, "AMIGA: audio_core_slot_init currently not implemented");
+    /*auto decoder = std::make_unique<SDLDecoder>(std::move(in), extension_hint, repeat);
     if (!decoder->Open())
         return -1;
-    return audio_core_slot_init(std::move(decoder));
+    return audio_core_slot_init(std::move(decoder));*/
 }
 
 // -------------------------------------------------------------------------------------------------
@@ -335,35 +349,39 @@ int audio_core_slot_init(std::unique_ptr<Stream> in, const String &extension_hin
 
 PlaybackState audio_core_slot_play(int slot_handle)
 {
-    std::lock_guard<std::mutex> lk(g_acore.mixer_mutex_m);
+    Debug::Printf(kDbgMsg_Info, "AMIGA: audio_core_slot_play currently not implemented");
+    /*std::lock_guard<std::mutex> lk(g_acore.mixer_mutex_m);
     g_acore.slots_[slot_handle]->Play();
     auto state = g_acore.slots_[slot_handle]->GetPlayState();
     g_acore.mixer_cv.notify_all();
-    return state;
+    return state;*/
 }
 
 PlaybackState audio_core_slot_pause(int slot_handle)
 {
-    std::lock_guard<std::mutex> lk(g_acore.mixer_mutex_m);
+    Debug::Printf(kDbgMsg_Info, "AMIGA: audio_core_slot_pause() currently not implemented");
+    /*std::lock_guard<std::mutex> lk(g_acore.mixer_mutex_m);
     g_acore.slots_[slot_handle]->Pause();
     auto state = g_acore.slots_[slot_handle]->GetPlayState();
     g_acore.mixer_cv.notify_all();
-    return state;
+    return state;*/
 }
 
 void audio_core_slot_stop(int slot_handle)
 {
-    std::lock_guard<std::mutex> lk(g_acore.mixer_mutex_m);
+    Debug::Printf(kDbgMsg_Info, "AMIGA: audio_core_slot_stop() currently not implemented");
+    /*std::lock_guard<std::mutex> lk(g_acore.mixer_mutex_m);
     g_acore.slots_[slot_handle]->Stop();
     g_acore.slots_.erase(slot_handle);
-    g_acore.mixer_cv.notify_all();
+    g_acore.mixer_cv.notify_all();*/
 }
 
 void audio_core_slot_seek_ms(int slot_handle, float pos_ms)
 {
-    std::lock_guard<std::mutex> lk(g_acore.mixer_mutex_m);
+    Debug::Printf(kDbgMsg_Info, "AMIGA: audio_core_slot_seek_ms() currently not implemented");
+    /*std::lock_guard<std::mutex> lk(g_acore.mixer_mutex_m);
     g_acore.slots_[slot_handle]->Seek(pos_ms);
-    g_acore.mixer_cv.notify_all();
+    g_acore.mixer_cv.notify_all();*/
 }
 
 
@@ -373,17 +391,19 @@ void audio_core_slot_seek_ms(int slot_handle, float pos_ms)
 
 void audio_core_set_master_volume(float newvol) 
 {
-    alListenerf(AL_GAIN, newvol*GlobalGainScaling);
-    dump_al_errors();
+    Debug::Printf(kDbgMsg_Info, "AMIGA: audio_core_slot_seek_ms() currently not implemented");
+    /*alListenerf(AL_GAIN, newvol*GlobalGainScaling);
+    dump_al_errors();*/
 }
 
 void audio_core_slot_configure(int slot_handle, float volume, float speed, float panning)
 {
-    std::lock_guard<std::mutex> lk(g_acore.mixer_mutex_m);
+    Debug::Printf(kDbgMsg_Info, "AMIGA: audio_core_slot_configure() currently not implemented");
+    /*std::lock_guard<std::mutex> lk(g_acore.mixer_mutex_m);
     auto &player = g_acore.slots_[slot_handle]->GetAlSource();
     player.SetVolume(volume * GlobalGainScaling);
     player.SetSpeed(speed);
-    player.SetPanning(panning);
+    player.SetPanning(panning);*/
 }
 
 // -------------------------------------------------------------------------------------------------
@@ -392,43 +412,48 @@ void audio_core_slot_configure(int slot_handle, float volume, float speed, float
 
 float audio_core_slot_get_pos_ms(int slot_handle)
 {
-    std::lock_guard<std::mutex> lk(g_acore.mixer_mutex_m);
+    Debug::Printf(kDbgMsg_Info, "AMIGA: audio_core_slot_get_pos_ms() currently not implemented");
+    /*std::lock_guard<std::mutex> lk(g_acore.mixer_mutex_m);
     auto pos = g_acore.slots_[slot_handle]->GetAlSource().GetPositionMs();
     g_acore.mixer_cv.notify_all();
-    return pos;
+    return pos;*/
 }
 
 float audio_core_slot_get_duration(int slot_handle)
 {
-    std::lock_guard<std::mutex> lk(g_acore.mixer_mutex_m);
+    Debug::Printf(kDbgMsg_Info, "AMIGA: audio_core_slot_get_duration() currently not implemented");
+    /*std::lock_guard<std::mutex> lk(g_acore.mixer_mutex_m);
     auto dur = g_acore.slots_[slot_handle]->GetDecoder().GetDurationMs();
     g_acore.mixer_cv.notify_all();
-    return dur;
+    return dur;*/
 }
 
 int audio_core_slot_get_freq(int slot_handle)
 {
-    std::lock_guard<std::mutex> lk(g_acore.mixer_mutex_m);
+    Debug::Printf(kDbgMsg_Info, "AMIGA: audio_core_slot_get_freq() currently not implemented");
+    /*std::lock_guard<std::mutex> lk(g_acore.mixer_mutex_m);
     auto dur = g_acore.slots_[slot_handle]->GetDecoder().GetFreq();
     g_acore.mixer_cv.notify_all();
-    return dur;
+    return dur;*/
 }
 
 PlaybackState audio_core_slot_get_play_state(int slot_handle)
 {
-    std::lock_guard<std::mutex> lk(g_acore.mixer_mutex_m);
+    Debug::Printf(kDbgMsg_Info, "AMIGA: audio_core_slot_get_play_state() currently not implemented");
+    /*std::lock_guard<std::mutex> lk(g_acore.mixer_mutex_m);
     auto state = g_acore.slots_[slot_handle]->GetPlayState();
     g_acore.mixer_cv.notify_all();
-    return state;
+    return state;*/
 }
 
 PlaybackState audio_core_slot_get_play_state(int slot_handle, float &pos_ms)
 {
-    std::lock_guard<std::mutex> lk(g_acore.mixer_mutex_m);
+    Debug::Printf(kDbgMsg_Info, "AMIGA: audio_core_slot_get_play_state() currently not implemented");
+    /*std::lock_guard<std::mutex> lk(g_acore.mixer_mutex_m);
     auto state = g_acore.slots_[slot_handle]->GetPlayState();
     pos_ms = g_acore.slots_[slot_handle]->GetAlSource().GetPositionMs();
     g_acore.mixer_cv.notify_all();
-    return state;
+    return state;*/
 }
 
 
@@ -438,8 +463,9 @@ PlaybackState audio_core_slot_get_play_state(int slot_handle, float &pos_ms)
 
 void audio_core_entry_poll()
 {
+    Debug::Printf(kDbgMsg_Info, "AMIGA: audio_core_entry_poll() currently not implemented");
     // burn off any errors for new loop
-    dump_al_errors();
+    /*dump_al_errors();
 
     for (auto &entry : g_acore.slots_) {
         auto &slot = entry.second;
@@ -449,19 +475,20 @@ void audio_core_entry_poll()
         } catch (const std::exception& e) {
             Debug::Printf(kDbgMsg_Error, "AudioCore poll exception: %s", e.what());
         }
-    }
+    }*/
 }
 
 #if !defined(AGS_DISABLE_THREADS)
 static void audio_core_entry()
 {
-    std::unique_lock<std::mutex> lk(g_acore.mixer_mutex_m);
+    Debug::Printf(kDbgMsg_Info, "AMIGA: audio_core_entry() currently not implemented");
+    /*std::unique_lock<std::mutex> lk(g_acore.mixer_mutex_m);
 
     while (g_acore.audio_core_thread_running) {
 
         audio_core_entry_poll();
 
         g_acore.mixer_cv.wait_for(lk, std::chrono::milliseconds(50));
-    }
+    }*/
 }
 #endif
