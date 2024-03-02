@@ -37,13 +37,14 @@ using namespace AGS::Engine;
 extern GameSetupStruct game;
 extern IGraphicsDriver *gfxDriver;
 
-eAGSKeyCode sdl_key_to_ags_key(const SDL_KeyboardEvent &kbevt, bool old_keyhandle);
+//eAGSKeyCode sdl_key_to_ags_key(const SDL_KeyboardEvent &kbevt, bool old_keyhandle);
 int sdl_mod_to_ags_mod(const SDL_KeyboardEvent &kbevt);
 
 // Converts SDL scan and key codes to the ags keycode
 KeyInput sdl_keyevt_to_ags_key(const SDL_Event &event, bool old_keyhandle)
 {
-    KeyInput ki;
+    Debug::Printf(kDbgMsg_Info, "AMIGA: sdl_keyevt_to_ags_key Currently not implemented");
+    /*KeyInput ki;
     // Normally SDL_TEXTINPUT is meant for handling the printable characters,
     // and not the actual key presses.
     // But in the "old key handle" mode we use it also to get the full range
@@ -73,12 +74,13 @@ KeyInput sdl_keyevt_to_ags_key(const SDL_Event &event, bool old_keyhandle)
         return ki;
     default:
         return ki;
-    }
+    }*/
 }
 
 int sdl_mod_to_ags_mod(const SDL_KeyboardEvent &kbevt)
 {
-    const SDL_Keysym key = kbevt.keysym;
+    Debug::Printf(kDbgMsg_Info, "AMIGA: sdl_mod_to_ags_mod Currently not implemented");
+    /*const SDL_Keysym key = kbevt.keysym;
     const Uint16 mod = key.mod;
     int ags_mod = 0;
     if (mod & KMOD_LSHIFT) ags_mod |= eAGSModLShift;
@@ -89,12 +91,13 @@ int sdl_mod_to_ags_mod(const SDL_KeyboardEvent &kbevt)
     if (mod & KMOD_RALT)   ags_mod |= eAGSModRAlt;
     if (mod & KMOD_NUM)    ags_mod |= eAGSModNum;
     if (mod & KMOD_CAPS)   ags_mod |= eAGSModCaps;
-    return ags_mod;
+    return ags_mod;*/
 }
 
 eAGSKeyCode sdl_key_to_ags_key(const SDL_KeyboardEvent &kbevt, bool old_keyhandle)
-{
-    const SDL_Keysym key = kbevt.keysym;
+{        
+    Debug::Printf(kDbgMsg_Info, "AMIGA: sdl_key_to_ags_key Currently not implemented");
+    /*const SDL_Keysym key = kbevt.keysym;
     const SDL_Keycode sym = key.sym;
     const Uint16 mod = key.mod;
 
@@ -196,7 +199,9 @@ eAGSKeyCode sdl_key_to_ags_key(const SDL_KeyboardEvent &kbevt, bool old_keyhandl
     case SDL_SCANCODE_RALT: return eAGSKeyCodeRAlt;
 
     default: return eAGSKeyCodeNone;
-    }
+
+    }*/
+    return eAGSKeyCodeNone;
 }
 
 // Converts ags key to SDL key scans (up to 3 values, because this is not a 1:1 match);
@@ -204,6 +209,8 @@ eAGSKeyCode sdl_key_to_ags_key(const SDL_KeyboardEvent &kbevt, bool old_keyhandl
 // TODO: double check and ammend later if anything is missing
 bool ags_key_to_sdl_scan(eAGSKeyCode key, SDL_Scancode(&scan)[3])
 {
+    Debug::Printf(kDbgMsg_Info, "AMIGA: ags_key_to_sdl_scan currently not implemented");
+    /*
     scan[0] = SDL_SCANCODE_UNKNOWN;
     scan[1] = SDL_SCANCODE_UNKNOWN;
     scan[2] = SDL_SCANCODE_UNKNOWN;
@@ -290,7 +297,8 @@ bool ags_key_to_sdl_scan(eAGSKeyCode key, SDL_Scancode(&scan)[3])
     case eAGSKeyCodeRAlt: scan[0] = SDL_SCANCODE_RALT; return true;
 
     default: return false;
-    }
+    }*/
+    return false;
 }
 
 
@@ -308,7 +316,8 @@ bool sys_modkeys_fired = false; // saved mod key combination already fired
 
 InputType ags_inputevent_ready()
 {
-    if (g_inputEvtQueue.size() == 0)
+    Debug::Printf(kDbgMsg_Info, "AMIGA: ags_inputevent_ready Currently not implemented");
+    /*if (g_inputEvtQueue.size() == 0)
         return kInputNone;
     switch (g_inputEvtQueue.front().type)
     {
@@ -321,7 +330,8 @@ InputType ags_inputevent_ready()
         return kInputMouse;
     default:
         return kInputNone;
-    }
+    }*/
+    return kInputNone;
 }
 
 SDL_Event ags_get_next_inputevent()
@@ -341,19 +351,23 @@ int ags_iskeydown(eAGSKeyCode ags_key)
     // left only in case if necessary for some ancient game, but
     // this really may only be required if there's a key waiting loop in
     // script without Wait(1) to let engine poll events in a natural way.
-    if (game.options[OPT_KEYHANDLEAPI] == 0)
+    Debug::Printf(kDbgMsg_Info, "AMIGA: ags_iskeydown Currently not implemented");
+    /*if (game.options[OPT_KEYHANDLEAPI] == 0)
+    
         SDL_PumpEvents();
 
     const Uint8 *state = SDL_GetKeyboardState(NULL);
     SDL_Scancode scan[3];
     if (!ags_key_to_sdl_scan(ags_key, scan))
         return 0;
-    return (state[scan[0]] || state[scan[1]] || state[scan[2]]);
+    return (state[scan[0]] || state[scan[1]] || state[scan[2]]);*/
+    return 0;
 }
 
 void ags_simulate_keypress(eAGSKeyCode ags_key)
 {
-    SDL_Scancode scan[3];
+    Debug::Printf(kDbgMsg_Info, "AMIGA:  ags_simulate_keypress Currently not implemented");
+    /*SDL_Scancode scan[3];
     if (!ags_key_to_sdl_scan(ags_key, scan))
         return;
     // Push a key event to the event queue; note that this won't affect the key states array
@@ -363,7 +377,7 @@ void ags_simulate_keypress(eAGSKeyCode ags_key)
     sdlevent.key.keysym.scancode = scan[0];
     SDL_PushEvent(&sdlevent);
     sdlevent.type = SDL_KEYUP;
-    SDL_PushEvent(&sdlevent);
+    SDL_PushEvent(&sdlevent);*/
 }
 
 static void on_sdl_key_down(const SDL_Event &event)
@@ -849,7 +863,7 @@ static void on_sdl_touch_down(const SDL_TouchFingerEvent &event)
     }
 }
 
-static void on_sdl_touch_up(const SDL_TouchFingerEvent &event)
+/*static void on_sdl_touch_up(const SDL_TouchFingerEvent &event)
 {
     int finger_index = touch.fingers.get_index(event.fingerId);
     if(finger_index == Fingers::NO_INDEX) return;
@@ -910,9 +924,9 @@ static void on_sdl_touch_up(const SDL_TouchFingerEvent &event)
     default: break; // do nothing
     }
     touch.fingers.pop(event.fingerId);
-}
+}*/
 
-static void on_sdl_touch_motion(const SDL_TouchFingerEvent &event)
+/*static void on_sdl_touch_motion(const SDL_TouchFingerEvent &event)
 {
     int finger_index = touch.fingers.get_index(event.fingerId);
     if(finger_index == Fingers::NO_INDEX) return;
@@ -940,7 +954,7 @@ static void on_sdl_touch_motion(const SDL_TouchFingerEvent &event)
     }
     default: break; // do nothing
     }
-}
+}*/
 
 
 
@@ -987,7 +1001,8 @@ void sys_evt_set_focus_callbacks(void(*switch_in)(void), void(*switch_out)(void)
     _on_switchout_callback = switch_out;
 }
 
-void sys_evt_process_one(const SDL_Event &event) {
+/*void sys_evt_process_one(const SDL_Event &event) {
+    Debug::Printf(kDbgMsg_Info, "AMIGA: ags_iskeydown Currently not implemented");
     switch (event.type) {
     // GENERAL
     case SDL_QUIT:
@@ -1056,19 +1071,21 @@ void sys_evt_process_one(const SDL_Event &event) {
         break;
     default: break;
     }
-}
+}*/
 
 void sys_evt_process_pending(void) {
-    SDL_Event event;
+    Debug::Printf(kDbgMsg_Info, "AMIGA: sys_evt_process_pending Currently not implemented");
+    /*SDL_Event event;
     while (SDL_PollEvent(&event)) {
         sys_evt_process_one(event);
-    }
+    }*/
 }
 
 void sys_flush_events(void) {
-    SDL_PumpEvents();
+    Debug::Printf(kDbgMsg_Info, "AMIGA: sys_flush_events Currently not implemented");
+    /*SDL_PumpEvents();
     SDL_FlushEvent(SDL_WINDOWEVENT);
     SDL_FlushEvents(SDL_KEYDOWN, SDL_TEXTINPUT);
     SDL_FlushEvents(SDL_MOUSEMOTION, SDL_MOUSEWHEEL);
-    ags_clear_input_state();
+    ags_clear_input_state();*/
 }
