@@ -20,7 +20,6 @@
 #include <unordered_map>
 #include "debug/out.h"
 #include "media/audio/sdldecoder.h"
-#include "media/audio/openalsource.h"
 #include "util/memory_compat.h"
 
 using namespace AGS::Common;
