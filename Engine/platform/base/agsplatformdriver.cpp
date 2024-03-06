@@ -18,7 +18,6 @@
 #include "platform/base/agsplatformdriver.h"
 #include <stdio.h>
 #include <thread>
-#include <SDL.h>
 #include "ac/common.h"
 #include "ac/runtime_defines.h"
 #include "ac/timer.h"
@@ -62,9 +61,10 @@ Size AGSPlatformDriver::ValidateWindowSize(const Size &sz, bool borderless) cons
     // SDL2 currently does not allow to get window border size
     // without creating a window first. But this potentially may be
     // acquired, at least on some platforms (e.g. Windows).
-    SDL_Rect rc;
+    //AMIGAWARNING AGSPlatformDriver::ValidateWindowSize
+    /*SDL_Rect rc;
     SDL_GetDisplayUsableBounds(0, &rc);
-    return Size::Clamp(sz, Size(1, 1), Size(rc.w, rc.h));
+    return Size::Clamp(sz, Size(1, 1), Size(rc.w, rc.h));*/
 }
 
 const char* AGSPlatformDriver::GetBackendFailUserHint()
@@ -136,8 +136,9 @@ void AGSPlatformDriver::WriteStdErr(const char *fmt, ...)
 
 void AGSPlatformDriver::DisplayMessageBox(const char *text)
 {
-    if (_guiMode)
-        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, "Adventure Game Studio", text, sys_get_window());
+    //AMIGAWARNING: AGSPlatformDriver::DisplayMessageBox Not implemented yet
+    /*if (_guiMode)
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, "Adventure Game Studio", text, sys_get_window());*/
 }
 
 void AGSPlatformDriver::YieldCPU() {
