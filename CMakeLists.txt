@@ -320,7 +320,6 @@ set(FREETYPE_LIBRARIES FreeType::FreeType)
 add_subdirectory(Common/libsrc/alfont-2.0.9     EXCLUDE_FROM_ALL)
 add_subdirectory(Common)
 
-add_subdirectory(Engine/libsrc/apeg-1.2.1       EXCLUDE_FROM_ALL)
 if(AGS_OPENGLES2)
     add_subdirectory(Engine/libsrc/glad-gles2       EXCLUDE_FROM_ALL)
 else()

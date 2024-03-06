@@ -548,11 +548,7 @@ if (WIN32 OR LINUX)
     target_compile_definitions(engine PRIVATE AGS_HAS_CD_AUDIO)
 endif ()
 
-if (AGS_NO_VIDEO_PLAYER)
-    target_compile_definitions(engine PRIVATE AGS_NO_VIDEO_PLAYER)
-else()
-    target_link_libraries(engine PUBLIC Apeg::Apeg)
-endif()
+target_compile_definitions(engine PRIVATE AGS_NO_VIDEO_PLAYER)
 
 if (WIN32)
     target_link_libraries(engine PUBLIC shlwapi)
