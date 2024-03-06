@@ -38,7 +38,7 @@ extern GameSetupStruct game;
 extern IGraphicsDriver *gfxDriver;
 
 //eAGSKeyCode sdl_key_to_ags_key(const SDL_KeyboardEvent &kbevt, bool old_keyhandle);
-int sdl_mod_to_ags_mod(const SDL_KeyboardEvent &kbevt);
+//int sdl_mod_to_ags_mod(const SDL_KeyboardEvent &kbevt);
 
 // Converts SDL scan and key codes to the ags keycode
 KeyInput sdl_keyevt_to_ags_key(const SDL_Event &event, bool old_keyhandle)
@@ -77,10 +77,10 @@ KeyInput sdl_keyevt_to_ags_key(const SDL_Event &event, bool old_keyhandle)
     }*/
 }
 
-int sdl_mod_to_ags_mod(const SDL_KeyboardEvent &kbevt)
+/*int sdl_mod_to_ags_mod(const SDL_KeyboardEvent &kbevt)
 {
     Debug::Printf(kDbgMsg_Info, "AMIGA: sdl_mod_to_ags_mod Currently not implemented");
-    /*const SDL_Keysym key = kbevt.keysym;
+    const SDL_Keysym key = kbevt.keysym;
     const Uint16 mod = key.mod;
     int ags_mod = 0;
     if (mod & KMOD_LSHIFT) ags_mod |= eAGSModLShift;
@@ -91,8 +91,8 @@ int sdl_mod_to_ags_mod(const SDL_KeyboardEvent &kbevt)
     if (mod & KMOD_RALT)   ags_mod |= eAGSModRAlt;
     if (mod & KMOD_NUM)    ags_mod |= eAGSModNum;
     if (mod & KMOD_CAPS)   ags_mod |= eAGSModCaps;
-    return ags_mod;*/
-}
+    return ags_mod;
+}*/
 
 eAGSKeyCode sdl_key_to_ags_key(const SDL_KeyboardEvent &kbevt, bool old_keyhandle)
 {        
