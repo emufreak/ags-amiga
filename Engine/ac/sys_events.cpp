@@ -380,14 +380,14 @@ void ags_simulate_keypress(eAGSKeyCode ags_key)
     SDL_PushEvent(&sdlevent);*/
 }
 
-static void on_sdl_key_down(const SDL_Event &event)
+/*static void on_sdl_key_down(const SDL_Event &event)
 {
     // Engine is not structured very well yet, and we cannot pass this event where it's needed;
     // instead we save it in the queue where it will be ready whenever any component asks for one.
     g_inputEvtQueue.push_back(event);
-}
+}*/
 
-static void on_sdl_key_up(const SDL_Event &event)
+/*static void on_sdl_key_up(const SDL_Event &event)
 {
     // Key up events are only used for reacting on mod key combinations at the moment.
     g_inputEvtQueue.push_back(event);
@@ -398,7 +398,7 @@ static void on_sdl_textinput(const SDL_Event &event)
     // We also push text input events to the same queue, as this is only valid way to get proper
     // text interpretation of the pressed key combination based on current system locale.
     g_inputEvtQueue.push_back(event);
-}
+}*/
 
 
 // ----------------------------------------------------------------------------
@@ -416,13 +416,15 @@ enum eAGSMouseButtonMask
 
 eAGSMouseButton sdl_mbut_to_ags_but(int sdl_mbut)
 {
-    switch (sdl_mbut)
+    Debug::Printf(kDbgMsg_Info, "AMIGA:  sdl_mbut_to_ags_but Currently not implemented");
+    return kMouseNone;
+    /*switch (sdl_mbut)
     {
     case SDL_BUTTON_LEFT: return kMouseLeft;
     case SDL_BUTTON_RIGHT: return kMouseRight;
     case SDL_BUTTON_MIDDLE: return kMouseMiddle;
     default: return kMouseNone;
-    }
+    }*/
 }
 
 static int sdl_button_to_mask(int button)
