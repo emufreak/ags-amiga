@@ -39,10 +39,10 @@ union SDL_Event;
 // Converts SDL key data to eAGSKeyCode, which may be also directly used as an ASCII char
 // if it is in proper range, see comments to eAGSKeyCode for details.
 // Optionally works in bacward compatible mode (old_keyhandle)
-KeyInput sdl_keyevt_to_ags_key(const SDL_Event &event, bool old_keyhandle);
+//KeyInput sdl_keyevt_to_ags_key(const SDL_Event &event, bool old_keyhandle);
 // Converts eAGSKeyCode to SDL key scans (up to 3 values, because this is not a 1:1 match);
 // NOTE: fails at Ctrl+ or Alt+ AGS keys, or any unknown key codes.
-bool ags_key_to_sdl_scan(eAGSKeyCode key, SDL_Scancode(&scan)[3]);
+//bool ags_key_to_sdl_scan(eAGSKeyCode key, SDL_Scancode(&scan)[3]);
 
 // Tells if key event refers to one of the mod-keys
 inline bool is_sdl_mod_key(const SDL_Keysym &key)
@@ -84,7 +84,7 @@ inline int make_sdl_merged_mod(int mod)
 // return the InputType corresponding to the first queued event.
 InputType ags_inputevent_ready();
 // Queries for the next input event in buffer; returns uninitialized data if none was queued
-SDL_Event ags_get_next_inputevent();
+//SDL_Event ags_get_next_inputevent();
 // Tells if the key is currently down, provided AGS key.
 // NOTE: for particular script codes this function returns positive if either of two keys are down.
 int ags_iskeydown(eAGSKeyCode ags_key);

@@ -41,10 +41,10 @@ extern IGraphicsDriver *gfxDriver;
 //int sdl_mod_to_ags_mod(const SDL_KeyboardEvent &kbevt);
 
 // Converts SDL scan and key codes to the ags keycode
-KeyInput sdl_keyevt_to_ags_key(const SDL_Event &event, bool old_keyhandle)
+/*KeyInput sdl_keyevt_to_ags_key(const SDL_Event &event, bool old_keyhandle)
 {
     Debug::Printf(kDbgMsg_Info, "AMIGA: sdl_keyevt_to_ags_key Currently not implemented");
-    /*KeyInput ki;
+    KeyInput ki;
     // Normally SDL_TEXTINPUT is meant for handling the printable characters,
     // and not the actual key presses.
     // But in the "old key handle" mode we use it also to get the full range
@@ -74,8 +74,8 @@ KeyInput sdl_keyevt_to_ags_key(const SDL_Event &event, bool old_keyhandle)
         return ki;
     default:
         return ki;
-    }*/
-}
+    }
+}*/
 
 /*int sdl_mod_to_ags_mod(const SDL_KeyboardEvent &kbevt)
 {
@@ -207,10 +207,10 @@ KeyInput sdl_keyevt_to_ags_key(const SDL_Event &event, bool old_keyhandle)
 // Converts ags key to SDL key scans (up to 3 values, because this is not a 1:1 match);
 // NOTE: will ignore Ctrl+ or Alt+ script keys.
 // TODO: double check and ammend later if anything is missing
-bool ags_key_to_sdl_scan(eAGSKeyCode key, SDL_Scancode(&scan)[3])
+/*bool ags_key_to_sdl_scan(eAGSKeyCode key, SDL_Scancode(&scan)[3])
 {
     Debug::Printf(kDbgMsg_Info, "AMIGA: ags_key_to_sdl_scan currently not implemented");
-    /*
+    
     scan[0] = SDL_SCANCODE_UNKNOWN;
     scan[1] = SDL_SCANCODE_UNKNOWN;
     scan[2] = SDL_SCANCODE_UNKNOWN;
@@ -297,9 +297,9 @@ bool ags_key_to_sdl_scan(eAGSKeyCode key, SDL_Scancode(&scan)[3])
     case eAGSKeyCodeRAlt: scan[0] = SDL_SCANCODE_RALT; return true;
 
     default: return false;
-    }*/
+    }
     return false;
-}
+}*/
 
 
 
@@ -334,7 +334,7 @@ InputType ags_inputevent_ready()
     return kInputNone;
 }
 
-SDL_Event ags_get_next_inputevent()
+/*SDL_Event ags_get_next_inputevent()
 {
     if (!g_inputEvtQueue.empty())
     {
@@ -343,7 +343,7 @@ SDL_Event ags_get_next_inputevent()
         return evt;
     }
     return {};
-}
+}*/
 
 int ags_iskeydown(eAGSKeyCode ags_key)
 {
