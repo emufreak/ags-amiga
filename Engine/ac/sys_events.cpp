@@ -429,26 +429,29 @@ eAGSMouseButton sdl_mbut_to_ags_but(int sdl_mbut)
 
 static int sdl_button_to_mask(int button)
 {
-    switch (button)
+    Debug::Printf(kDbgMsg_Info, "AMIGA:  sdl_button_to_mask Currently not implemented");
+    /*switch (button)
     {
     case SDL_BUTTON_LEFT: return MouseBitLeft;
     case SDL_BUTTON_RIGHT: return MouseBitRight;
     case SDL_BUTTON_MIDDLE: return MouseBitMiddle;
     case SDL_BUTTON_X1: return MouseBitX1;
     case SDL_BUTTON_X2: return MouseBitX2;
-    }
+    }*/
     return 0;
 }
 
 static int ags_button_to_sdl(eAGSMouseButton but)
 {
-    switch (but)
+    Debug::Printf(kDbgMsg_Info, "AMIGA:  ags_button_to_sdl Currently not implemented");    
+    /*switch (but)
     {
     case kMouseLeft: return SDL_BUTTON_LEFT;
     case kMouseRight: return SDL_BUTTON_RIGHT;
     case kMouseMiddle: return SDL_BUTTON_MIDDLE;
     default: return 0;
-    }
+    }*/
+    return 0;
 }
 
 // Convert mouse button id to flags
@@ -478,14 +481,15 @@ bool ags_misbuttondown(eAGSMouseButton but)
 
 void ags_simulate_mouseclick(eAGSMouseButton but)
 {
-    SDL_Event sdlevent = {};
+    Debug::Printf(kDbgMsg_Info, "AMIGA:  ags_simulate_mouseclick Currently not implemented");    
+    /*SDL_Event sdlevent = {};
     sdlevent.type = SDL_MOUSEBUTTONDOWN;
     sdlevent.button.button = ags_button_to_sdl(but);
     sdlevent.button.x = sys_mouse_x; // CHECKME later if this is okay...
     sdlevent.button.y = sys_mouse_y;
     SDL_PushEvent(&sdlevent);
     sdlevent.type = SDL_MOUSEBUTTONUP;
-    SDL_PushEvent(&sdlevent);
+    SDL_PushEvent(&sdlevent);*/
 }
 
 // Syncs all the emulated mouse devices with the real sys_mouse_* coords
