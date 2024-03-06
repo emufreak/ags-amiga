@@ -57,8 +57,8 @@ IGfxDriverFactory *GetGfxDriverFactory(const String id)
 #endif
     if (id.CompareNoCase("Software") == 0)
         return ALSW::SDLRendererGraphicsFactory::GetFactory();
-    SDL_SetError("No graphics factory with such id: %s", id.GetCStr());
-    return nullptr;
+    /*SDL_SetError("No graphics factory with such id: %s", id.GetCStr());
+    return nullptr;*/
 }
 
 } // namespace Engine

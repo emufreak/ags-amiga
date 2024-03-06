@@ -24,7 +24,6 @@
 #ifndef __AGS_EE_GFX__ALI3DSW_H
 #define __AGS_EE_GFX__ALI3DSW_H
 #include <memory>
-#include <SDL.h>
 #include "core/platform.h"
 #include "gfx/bitmap.h"
 #include "gfx/ddb.h"

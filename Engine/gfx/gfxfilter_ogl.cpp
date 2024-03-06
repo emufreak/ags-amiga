@@ -17,7 +17,6 @@
 #if AGS_HAS_OPENGL
 
 #include "gfx/gfxfilter_ogl.h"
-#include "ogl_headers.h"
 
 namespace AGS
 {

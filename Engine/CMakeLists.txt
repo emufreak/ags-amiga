@@ -307,8 +307,6 @@ target_sources(engine
     game/viewport.cpp
     game/viewport.h
     gfx/ali3dexception.h
-    gfx/ali3dogl.cpp
-    gfx/ali3dogl.h
     gfx/ali3dsw.cpp
     gfx/ali3dsw.h
     gfx/blender.cpp
@@ -338,7 +336,6 @@ target_sources(engine
     gfx/gfxfilter_sdl_renderer.h
     gfx/gfxmodelist.h
     gfx/graphicsdriver.h
-    gfx/ogl_headers.h
     gui/animatingguibutton.cpp
     gui/animatingguibutton.h
     gui/cscidialog.cpp
