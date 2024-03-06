@@ -110,12 +110,12 @@ bool engine_init_backend()
     Debug::Printf(kDbgMsg_Info, "Initializing backend libs");
     if (sys_main_init())
     {
-        const char *err = SDL_GetError();
+        /*const char *err = SDL_GetError();
         const char *user_hint = platform->GetBackendFailUserHint();
         platform->DisplayAlert("Unable to initialize SDL library.\n%s\n\n%s",
             (err && err[0]) ? err : "SDL provided no further information on the problem.",
             user_hint);
-        return false;
+        return false;*/
     }
     
     // Initialize stripped allegro library

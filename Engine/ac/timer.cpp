@@ -19,9 +19,6 @@
 #if defined(AGS_DISABLE_THREADS)
 #include "media/audio/audio_core.h"
 #endif
-#if AGS_PLATFORM_OS_EMSCRIPTEN
-#include "SDL.h"
-#endif
 
 extern volatile bool game_update_suspend;
 extern volatile bool want_exit, abort_engine;

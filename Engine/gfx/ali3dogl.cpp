@@ -17,7 +17,6 @@
 #include "gfx/ali3dogl.h"
 #include <algorithm>
 #include <stack>
-#include <SDL.h>
 #include "ac/sys_events.h"
 #include "ac/timer.h"
 #include "debug/out.h"

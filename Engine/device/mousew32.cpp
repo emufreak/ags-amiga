@@ -21,7 +21,6 @@
 //
 //=============================================================================
 #include "device/mousew32.h"
-#include <SDL.h>
 #include "ac/gamestate.h"
 #include "ac/sys_events.h"
 #include "debug/out.h"

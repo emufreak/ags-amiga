@@ -15,7 +15,6 @@
 #include <chrono>
 #include <deque>
 #include <math.h>
-#include <SDL.h>
 #include "core/platform.h"
 #include "ac/common.h"
 #include "ac/gamesetup.h"
@@ -309,7 +308,7 @@ extern IGraphicsDriver *gfxDriver;
 
 // Because our game engine still uses input polling, we have to accumulate
 // input events for our internal use whenever engine have to query player input.
-static std::deque<SDL_Event> g_inputEvtQueue;
+//static std::deque<SDL_Event> g_inputEvtQueue;
 
 int sys_modkeys = 0; // saved accumulated key mods
 bool sys_modkeys_fired = false; // saved mod key combination already fired
@@ -495,7 +494,7 @@ void ags_simulate_mouseclick(eAGSMouseButton but)
 // Syncs all the emulated mouse devices with the real sys_mouse_* coords
 static void sync_sys_mouse_pos();
 
-static void on_sdl_mouse_motion(const SDL_MouseMotionEvent &event)
+/*static void on_sdl_mouse_motion(const SDL_MouseMotionEvent &event)
 {
     if (event.which == disabled_mouse_device)
         return;
@@ -533,7 +532,7 @@ static void on_sdl_mouse_wheel(const SDL_MouseWheelEvent &event)
         return;
 
     sys_mouse_z += event.y;
-}
+}*/
 
 void ags_mouse_acquire_relxy(int &x, int &y)
 {
@@ -565,131 +564,16 @@ int ags_check_mouse_wheel()
 }
 
 
-// ----------------------------------------------------------------------------
-// TOUCH INPUT
-// ----------------------------------------------------------------------------
-
-// SDL_FingerIDs are unique for down-motion-up events, but beyond this there is no cross-platform guarantee
-// this struct tracks currently active fingers on the touch screen, and matches a slot index for each
-// we will use this to implement the logic in this example
-// - first finger down (consider LMB, index 0);
-// - second finger down (consider RMB, index 1);
-// - first finger up (consider LMB up);
-// - second finger is still pressed and still considered RMB;
-// - third(?) finger down, takes the free role of LMB (index 0).
-struct Fingers
-{
-public:
-    static const int MAX_FINGERS = 2;
-    static const int NO_INDEX = -1;
-
-    // store fingerId, return given finger index
-    int push(SDL_FingerID fingerId)
-    {
-        if (contains(fingerId))
-            return NO_INDEX; // invalid, fingerId already present
-
-        auto it = std::find(_fingers.begin(), _fingers.end(), NO_ID);
-        if(it == _fingers.end())
-            return NO_INDEX; // no slot for new finger
-
-        *it = fingerId;
-        return it - _fingers.begin();
-    };
-
-    int get_index(SDL_FingerID fingerId) const
-    {
-        auto it = std::find(_fingers.begin(), _fingers.end(), fingerId);
-        if(it != _fingers.end())
-            return it - _fingers.begin();
-
-        return NO_INDEX;
-    };
-
-    void pop(SDL_FingerID fingerId)
-    {
-        int idx = get_index(fingerId);
-        assert(idx != NO_INDEX);
-        if (idx != NO_INDEX) {
-            _fingers[idx] = NO_ID;
-        }
-    };
-
-private:
-    const SDL_FingerID NO_ID = -1; // std::find reads by reference, can't be static
-    std::array<SDL_FingerID, MAX_FINGERS> _fingers{{NO_ID, NO_ID}};
-
-    bool contains(SDL_FingerID fingerId) const
-    {
-        return std::find(_fingers.begin(), _fingers.end(), fingerId) != _fingers.end();
-    }
-};
-
-// Touch input state
-struct TouchState
-{
-    // on-screen fingers, used to remember the finger's role until all of them are released
-    Fingers fingers;
-    // Accumulated finger bits (a collection of bits shifted by finger index)
-    int fingers_down = 0;
-    // Double tap detection
-    // Max delay between finger actions which will still count as double tap
-    const std::chrono::milliseconds quick_tap_delay = std::chrono::milliseconds(300);
-    // The last tapping action timestamp
-    AGS_Clock::time_point last_tap_ts = AGS_Clock::now();
-    // The last tap's finger index
-    int last_tap_finger = 0;
-    // Same finger consecutive taps counter
-    int tap_count = 0;
-} static touch;
-
-// Touch-to-mouse emulation
-struct Touch2Mouse
-{
-    TouchMouseEmulation mode = kTouchMouse_None;
-    // Relative mode switch
-    bool is_relative = false;
-    // Speed of the relative movement
-    float speed = 1.f;
-    // Current (last) received touch position
-    Point pos;
-    // Starting touch position (needed for drag detection)
-    Point start_pos;
-    // Tells if the emulated mouse position has been initialized
-    bool emul_pos_init = false;
-    // Current emulated mouse position (eq to pos in absolute mode)
-    Point emul_pos;
-    // Last emulated mouse movement delta
-    Point emul_delta;
-    // Accumulated relative movement, for higher rounding accuracy
-    float rel_accum_x = 0.f;
-    float rel_accum_y = 0.f;
-    // Minimal finger motion required to begin cursor drag
-    const float drag_trigger_dist = 0.01f; // relative to screen size
-    // Accumulated drag distance (in absolute value)
-    float drag_dist_accum = 0.f;
-    // Tells to not translation finger motion events into the emulated mouse
-    bool ignore_motion = false;
-    // Tells to ignore any finger action other than the finger that
-    // emulates given button (SDL_BUTTON_LEFT, SDL_BUTTON_RIGHT etc)
-    int force_button = 0;
-    // Tells that the cursor is being dragged around
-    bool is_dragging = false;
-    // Which emulated mouse button is down while dragging the cursor
-    int drag_down = 0;
-} static t2m;
-
-
-void ags_touch_set_mouse_emulation(TouchMouseEmulation mode,
+/*void ags_touch_set_mouse_emulation(TouchMouseEmulation mode,
     bool relative, float speed)
 {
     t2m.mode = mode;
     t2m.is_relative = relative;
     t2m.speed = speed;
-}
+}*/
 
 // Converts touch finger index to the emulated mouse button
-static int tfinger_to_mouse_but(int finger_index)
+/*static int tfinger_to_mouse_but(int finger_index)
 {
     switch (finger_index)
     {
@@ -697,35 +581,38 @@ static int tfinger_to_mouse_but(int finger_index)
     case 1: return SDL_BUTTON_RIGHT;
     default: return 0;
     }
-}
+}*/
 
 static void send_mouse_button_event(int evt_type, int button, int x, int y)
 {
-    SDL_Event evt = {};
+    Debug::Printf(kDbgMsg_Info, "AMIGA: send_mouse_button_event Currently not implemented");    
+    /*SDL_Event evt = {};
     evt.type = evt_type;
     evt.button.which = SDL_TOUCH_MOUSEID;
     evt.button.state = evt_type == SDL_MOUSEBUTTONDOWN ? SDL_PRESSED : SDL_RELEASED;
     evt.button.button = button;
     evt.button.x = x;
     evt.button.y = y;
-    SDL_PushEvent(&evt);
+    SDL_PushEvent(&evt);*/
 }
 
 static void send_mouse_motion_event(int x, int y, int xrel, int yrel)
 {
-    SDL_Event evt = {};
+    Debug::Printf(kDbgMsg_Info, "AMIGA: send_mouse_motion_event Currently not implemented");    
+    /*SDL_Event evt = {};
     evt.type = SDL_MOUSEMOTION;
     evt.motion.which = SDL_TOUCH_MOUSEID;
     evt.motion.x = x;
     evt.motion.y = y;
     evt.motion.xrel = xrel;
     evt.motion.yrel = yrel;
-    SDL_PushEvent(&evt);
+    SDL_PushEvent(&evt);*/
 }
 
 // Handles double tap detection (multiple touch downs and ups)
-static void detect_double_tap(const SDL_TouchFingerEvent &event, bool down)
+/*static void detect_double_tap(const SDL_TouchFingerEvent &event, bool down)
 {
+    Debug::Printf(kDbgMsg_Info, "AMIGA: send_mouse_motion_event Currently not implemented");    
     auto tap_ts = AGS_Clock::now();
     if ((touch.last_tap_finger == event.fingerId) &&
         (tap_ts < (touch.last_tap_ts + touch.quick_tap_delay)))
@@ -738,12 +625,12 @@ static void detect_double_tap(const SDL_TouchFingerEvent &event, bool down)
     }
     touch.last_tap_ts = tap_ts;
     touch.last_tap_finger = event.fingerId;
-}
+}*/
 
 // Calculates relative emulated mouse delta,
 // utilizes speed scale and accumulated touch delta;
 // based on SDL2's GetScaledMouseDelta
-static int calc_relative_delta(float value, float scale, float &accum)
+/*static int calc_relative_delta(float value, float scale, float &accum)
 {
     if ((value > 0.f) != (accum > 0.f))
         accum = 0.f; // reset accumulated delta if direction has changed
@@ -751,11 +638,11 @@ static int calc_relative_delta(float value, float scale, float &accum)
     value = std::truncf(accum); // get nearest full integer value
     accum -= value; // subtract used part from accumulation
     return value;
-}
+}*/
 
 // Calculates emulated mouse position and movement delta,
 // based on touch position and delta, and t2m emulation settings
-static void set_t2m_pos(float x, float y, float dx, float dy)
+/*static void set_t2m_pos(float x, float y, float dx, float dy)
 {
     // TODO: better way to get SDL's logical size? we cannot access sdl renderer here
     int w = gfxDriver->GetDisplayMode().Width;
@@ -794,18 +681,18 @@ static void set_t2m_pos(float x, float y, float dx, float dy)
 
     t2m.emul_pos = Point::Clamp(t2m.emul_pos, Point(), Point(w - 1, h - 1));
     t2m.emul_pos_init = true;
-}
+}*/
 
 // Syncs all the emulated mouse devices with the real sys_mouse_* coords
-static void sync_sys_mouse_pos()
+/*static void sync_sys_mouse_pos()
 {
     if (t2m.emul_pos_init)
     {
         t2m.emul_pos = Point(sys_mouse_x, sys_mouse_y);
     }
-}
+}*/
 
-static void on_sdl_touch_down(const SDL_TouchFingerEvent &event)
+/*static void on_sdl_touch_down(const SDL_TouchFingerEvent &event)
 {
     int finger_index = touch.fingers.push(event.fingerId);
     if(finger_index == Fingers::NO_INDEX) return;
@@ -867,7 +754,7 @@ static void on_sdl_touch_down(const SDL_TouchFingerEvent &event)
     }
     default: break; // do nothing
     }
-}
+}*/
 
 /*static void on_sdl_touch_up(const SDL_TouchFingerEvent &event)
 {
@@ -966,22 +853,24 @@ static void on_sdl_touch_down(const SDL_TouchFingerEvent &event)
 
 void ags_clear_input_state()
 {
+    Debug::Printf(kDbgMsg_Info, "AMIGA: ags_clear_input_state Currently not implemented");    
     // clear everything related to the input state
-    g_inputEvtQueue.clear();
+    /*g_inputEvtQueue.clear();
     sys_modkeys = 0;
     sys_modkeys_fired = false;
     mouse_button_state = 0;
-    ags_clear_mouse_movement();
+    ags_clear_mouse_movement();*/
 }
 
 void ags_clear_input_buffer()
 {
-    g_inputEvtQueue.clear();
+    Debug::Printf(kDbgMsg_Info, "AMIGA: ags_clear_input_buffer Currently not implemented");    
+    /*g_inputEvtQueue.clear();
     // accumulated mod keys have to be cleared because they depend on key evt queue
     sys_modkeys = 0;
     sys_modkeys_fired = false;
     // forget about accumulated mouse movement too
-    ags_clear_mouse_movement();
+    ags_clear_mouse_movement();*/
 }
 
 void ags_clear_mouse_movement()

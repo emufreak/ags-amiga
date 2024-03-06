@@ -11,7 +11,6 @@
 // https://opensource.org/license/artistic-2-0/
 //
 //=============================================================================
-#include <SDL.h>
 #include "ac/common.h"
 #include "ac/draw.h"
 #include "ac/dynobj/cc_audiochannel.h"
