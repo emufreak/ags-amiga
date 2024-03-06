@@ -22,7 +22,6 @@
 #include <stdio.h>
 #include <chrono>
 #include <allegro.h>
-#include "SDL.h"
 #include "main/graphics_mode.h"
 #include "main/engine.h"
 #include "ac/system.h"

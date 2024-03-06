@@ -17,7 +17,6 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <unistd.h>
-#include <SDL.h>
 #include <allegro.h>
 #include <jni.h>
 #include <android/log.h>
