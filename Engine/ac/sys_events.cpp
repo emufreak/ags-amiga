@@ -94,10 +94,10 @@ KeyInput sdl_keyevt_to_ags_key(const SDL_Event &event, bool old_keyhandle)
     return ags_mod;
 }*/
 
-eAGSKeyCode sdl_key_to_ags_key(const SDL_KeyboardEvent &kbevt, bool old_keyhandle)
+/*eAGSKeyCode sdl_key_to_ags_key(const SDL_KeyboardEvent &kbevt, bool old_keyhandle)
 {        
     Debug::Printf(kDbgMsg_Info, "AMIGA: sdl_key_to_ags_key Currently not implemented");
-    /*const SDL_Keysym key = kbevt.keysym;
+    const SDL_Keysym key = kbevt.keysym;
     const SDL_Keycode sym = key.sym;
     const Uint16 mod = key.mod;
 
@@ -200,9 +200,9 @@ eAGSKeyCode sdl_key_to_ags_key(const SDL_KeyboardEvent &kbevt, bool old_keyhandl
 
     default: return eAGSKeyCodeNone;
 
-    }*/
+    }
     return eAGSKeyCodeNone;
-}
+}*/
 
 // Converts ags key to SDL key scans (up to 3 values, because this is not a 1:1 match);
 // NOTE: will ignore Ctrl+ or Alt+ script keys.
