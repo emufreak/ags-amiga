@@ -219,7 +219,7 @@ void SDLRendererGraphicsDriver::DestroyVirtualScreen()
 {
   Debug::Printf(kDbgMsg_Info, "AMIGA: AGRaphicsDriver:DestroyVirtualScreen Currently not implemented");
 
-  delete[] _fakeTexBitmap; // don't use destroy_bitmap(), because it's a fake structure
+  /*delete[] _fakeTexBitmap; // don't use destroy_bitmap(), because it's a fake structure
   _fakeTexBitmap = nullptr;
   if(_screenTex != nullptr) {
       SDL_DestroyTexture(_screenTex);
@@ -228,7 +228,7 @@ void SDLRendererGraphicsDriver::DestroyVirtualScreen()
 
   _origVirtualScreen.reset();
   virtualScreen = nullptr;
-  _stageVirtualScreen = nullptr;
+  _stageVirtualScreen = nullptr;*/
 }
 
 void SDLRendererGraphicsDriver::ReleaseDisplayMode()

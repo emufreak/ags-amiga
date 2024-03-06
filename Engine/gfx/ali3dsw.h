@@ -205,7 +205,7 @@ public:
     bool SupportsGammaControl() override ;
     void SetGamma(int newGamma) override;
     void UseSmoothScaling(bool /*enabled*/) override { }
-    bool DoesSupportVsyncToggle() override { return (SDL_VERSION_ATLEAST(2, 0, 18)) && _capsVsync; }
+    bool DoesSupportVsyncToggle() override { return false; }
     void RenderSpritesAtScreenResolution(bool /*enabled*/, int /*supersampling*/) override { }
     Bitmap *GetMemoryBackBuffer() override;
     void SetMemoryBackBuffer(Bitmap *backBuffer) override;
@@ -226,13 +226,13 @@ private:
     PSDLRenderFilter _filter;
 
     bool _hasGamma = false;
-    Uint16 _defaultGammaRed[256]{};
-    Uint16 _defaultGammaGreen[256]{};
-    Uint16 _defaultGammaBlue[256]{};
+    uint16_t _defaultGammaRed[256]{};
+    uint16_t _defaultGammaGreen[256]{};
+    uint16_t _defaultGammaBlue[256]{};
     int _gamma = 100;
 
-    SDL_Renderer *_renderer = nullptr;
-    SDL_Texture *_screenTex = nullptr;
+    /*SDL_Renderer *_renderer = nullptr;
+    SDL_Texture *_screenTex = nullptr;*/
     // BITMAP struct for wrapping screen texture locked pixels, so that we may use blit()
     BITMAP *_fakeTexBitmap = nullptr;
     unsigned char *_lastTexPixels = nullptr;
