@@ -437,8 +437,6 @@ target_sources(engine
 
     platform/linux/acpllnx.cpp
 
-    platform/osx/acplmac.cpp
-
     platform/android/acpland.cpp
 
     platform/emscripten/acpemscripten.cpp

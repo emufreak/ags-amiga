@@ -12,7 +12,6 @@
 //
 //=============================================================================
 #include "platform/base/sys_main.h"
-#include <SDL.h>
 #include <SDL_syswm.h>
 #include "debug/out.h"
 #include "platform/base/agsplatformdriver.h"
@@ -248,7 +247,10 @@ void sys_window_set_style(WindowMode mode, Size size) {
 }
 
 void sys_window_show_cursor(bool on) {
+    //Amiga: sys_window_show_cursor not yet implemented
+    /*
     SDL_ShowCursor(on ? SDL_ENABLE : SDL_DISABLE);
+    */
 }
 
 bool sys_window_lock_mouse(bool on) {
