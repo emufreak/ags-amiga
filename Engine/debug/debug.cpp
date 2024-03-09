@@ -19,7 +19,6 @@
 #if AGS_PLATFORM_OS_WINDOWS
 #include "platform/windows/windows.h"
 #endif
-#include <SDL.h>
 #include "ac/common.h"
 #include "ac/gamesetupstruct.h"
 #include "ac/gamestate.h"
@@ -60,25 +59,10 @@ IAGSEditorDebugger *editor_debugger = nullptr;
 int break_on_next_script_step = 0;
 volatile int game_paused_in_debugger = 0;
 
-#if AGS_PLATFORM_OS_WINDOWS
-
-#include "platform/windows/debug/namedpipesagsdebugger.h"
-
-HWND editor_window_handle = 0;
-
-IAGSEditorDebugger *GetEditorDebugger(const char *instanceToken)
-{
-    return new NamedPipesAGSDebugger(instanceToken);
-}
-
-#else   // AGS_PLATFORM_OS_WINDOWS
-
 IAGSEditorDebugger *GetEditorDebugger(const char* /*instanceToken*/)
 {
     return nullptr;
 }
-
-#endif
 
 int debug_flags=0;
 
@@ -88,9 +72,6 @@ void send_message_to_debugger(IAGSEditorDebugger *ide_debugger,
     const std::vector<std::pair<String, String>>& tag_values, const String& command)
 {
     String messageToSend = String::FromFormat(R"(<?xml version="1.0" encoding="Windows-1252"?><Debugger Command="%s">)", command.GetCStr());
-#if AGS_PLATFORM_OS_WINDOWS
-    messageToSend.Append(String::FromFormat("  <EngineWindow>%" PRIdPTR "</EngineWindow> ", sys_win_get_window()));
-#endif
 
     for(const auto& tag_value : tag_values)
     {
@@ -140,22 +121,18 @@ const String OutputDebuggerLogID = "debugger";
 // ----------------------------------------------------------------------------
 
 // SDL log priority names
-static const char *SDL_priority[SDL_NUM_LOG_PRIORITIES] = {
+/*static const char *SDL_priority[SDL_NUM_LOG_PRIORITIES] = {
     nullptr, "VERBOSE", "DEBUG", "INFO", "WARN", "ERROR", "CRITICAL"
-};
+};*/
 // SDL log category names
-static const char *SDL_category[SDL_LOG_CATEGORY_RESERVED1] = {
+/*static const char *SDL_category[SDL_LOG_CATEGORY_RESERVED1] = {
     "APP", "ERROR", "SYSTEM", "AUDIO", "VIDEO", "RENDER", "INPUT"
-};
+};*/
 // Conversion between SDL priorities and our MessageTypes
-static MessageType SDL_to_MT[SDL_NUM_LOG_PRIORITIES] = {
+/*static MessageType SDL_to_MT[SDL_NUM_LOG_PRIORITIES] = {
     kDbgMsg_None, kDbgMsg_All, kDbgMsg_Debug, kDbgMsg_Info, kDbgMsg_Warn, kDbgMsg_Error, kDbgMsg_Alert
-};
+};*/
 // Print SDL message through our own log
-void SDL_Log_Output(void* /*userdata*/, int category, SDL_LogPriority priority, const char *message) {
-    DbgMgr.Print(kDbgGroup_SDL, SDL_to_MT[priority],
-        String::FromFormat("%s: %s: %s", SDL_category[category], SDL_priority[priority], message));
-}
 
 // ----------------------------------------------------------------------------
 // Log configuration
@@ -286,7 +263,9 @@ void apply_log_config(const ConfigTree &cfg, const String &log_id,
 
 void init_debug(const ConfigTree &cfg, bool stderr_only)
 {
+    //Amiga: init_debug not implemented
     // Setup SDL output
+    /*
     SDL_LogSetOutputFunction(SDL_Log_Output, nullptr);
     String sdl_log = CfgReadString(cfg, "log", "sdl");
     SDL_LogPriority priority = StrUtil::ParseEnumAllowNum<SDL_LogPriority>(sdl_log,
@@ -302,7 +281,7 @@ void init_debug(const ConfigTree &cfg, bool stderr_only)
 
     // Message buffer to save all messages in case we read different log settings from config file
     DebugMsgBuff.reset(new MessageBuffer());
-    DbgMgr.RegisterOutput(OutputMsgBufID, DebugMsgBuff.get(), kDbgMsg_All);
+    DbgMgr.RegisterOutput(OutputMsgBufID, DebugMsgBuff.get(), kDbgMsg_All);*/
 }
 
 void apply_debug_config(const ConfigTree &cfg)
@@ -659,7 +638,8 @@ void scriptDebugHook (ccInstance *ccinst, int linenum) {
 int scrlockWasDown = 0;
 
 void check_debug_keys() {
-    if (play.debug_mode) {
+    //Amiga check_debug_keys not implemented
+    /*if (play.debug_mode) {
         // do the run-time script debugging
 
         const Uint8 *ks = SDL_GetKeyboardState(nullptr);
@@ -671,6 +651,6 @@ void check_debug_keys() {
             scrlockWasDown = 1;
         }
 
-    }
+    }*/
 
 }
