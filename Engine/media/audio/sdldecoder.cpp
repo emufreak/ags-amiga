@@ -55,9 +55,9 @@ const void *SDLResampler::Convert(const void *data, size_t sz, size_t &out_sz)
 //-----------------------------------------------------------------------------
 // SDLDecoder
 //-----------------------------------------------------------------------------
-const auto SampleDefaultBufferSize = 64 * 1024;
+//const auto SampleDefaultBufferSize = 64 * 1024;
 
-SDLDecoder::SDLDecoder(std::shared_ptr<std::vector<uint8_t>> &data,
+/*SDLDecoder::SDLDecoder(std::shared_ptr<std::vector<uint8_t>> &data,
     const AGS::Common::String &ext_hint, bool repeat)
     : _sampleData(data)
     , _sampleExt(ext_hint)
@@ -169,7 +169,7 @@ SoundBuffer SDLDecoder::GetData()
     } while (!_EOS && (sz == 0));
     return SoundBuffer(_sample->buffer, sz, old_pos,
         SoundHelper::MillisecondsFromBytes(sz, _sample->desired.format, _sample->desired.channels, _sample->desired.rate));
-}
+}*/
 
 } // namespace Engine
 } // namespace AGS

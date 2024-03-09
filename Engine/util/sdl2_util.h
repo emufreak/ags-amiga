@@ -19,18 +19,17 @@
 #define __AGS_EE_UTIL__SDL2UTIL_H
 
 #include <memory>
-#include <SDL.h>
 #include "util/stream.h"
 
 namespace AGS
 {
 namespace Engine
 {
-namespace SDL2Util
+/*namespace SDL2Util
 {
     // Opens a custom SDL2 RWOps implementation that embeds AGS stream
-    SDL_RWops *OpenRWops(std::unique_ptr<Common::Stream> ags_stream);
-} // namespace SDL2Util
+    //SDL_RWops *OpenRWops(std::unique_ptr<Common::Stream> ags_stream);
+} // namespace SDL2Util*/
 } // namespace Engine
 } // namespace AGS
 
