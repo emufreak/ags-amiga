@@ -425,9 +425,6 @@ target_sources(engine
     util/library.h
     util/library_dummy.h
     util/library_posix.h
-    util/sdl2_util.h
-    util/sdl2_util.cpp
-
     platform/windows/acplwin.cpp
     platform/windows/debug/namedpipesagsdebugger.cpp
     platform/windows/gfx/ali3dd3d.cpp
