@@ -238,8 +238,7 @@ void dump_al_errors()
 // -------------------------------------------------------------------------------------------------
 
 void audio_core_init() 
-{
-    Debug::Printf(kDbgMsg_Info, "AMIGA: AudioCoreSlot::Seek()");
+{    Debug::Printf(kDbgMsg_Info, "AMIGA:audio_core_init not implemented");
     /* InitAL opens a device and sets up a context using default attributes, making
      * the program ready to call OpenAL functions. */
 
