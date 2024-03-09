@@ -18,7 +18,6 @@
 
 #include <limits>
 #include <chrono>
-#include <SDL.h>
 #include "ac/button.h"
 #include "ac/common.h"
 #include "ac/character.h"

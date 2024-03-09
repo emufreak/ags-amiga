@@ -19,7 +19,6 @@
 #include "platform/windows/gfx/ali3dd3d.h"
 #include <algorithm>
 #include <stack>
-#include <SDL.h>
 #include <glm/ext.hpp>
 #include "ac/sys_events.h"
 #include "ac/timer.h"

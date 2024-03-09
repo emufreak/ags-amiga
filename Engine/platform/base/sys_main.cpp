@@ -34,32 +34,31 @@ struct SysMainInfo
 // ----------------------------------------------------------------------------
 
 int sys_main_init(/*config*/) {
-    SDL_version version;
-    SDL_GetVersion(&version);
-    Debug::Printf(kDbgMsg_Info, "SDL Version: %d.%d.%d", version.major, version.minor, version.patch);
+    //Amiga: sysmaininit not yet implemented
+    /*SDL_version version;
+    SDL_GetVersion(&version);*/
+    //Debug::Printf(kDbgMsg_Info, "SDL Version: %d.%d.%d", version.major, version.minor, version.patch);
     // Disable SDL2's own touch-to-mouse emulation:
     // we are going to use our own in the engine, and only if requested by the user config
-#if defined (SDL_HINT_TOUCH_MOUSE_EVENTS) && defined (SDL_HINT_MOUSE_TOUCH_EVENTS)
+/*#if defined (SDL_HINT_TOUCH_MOUSE_EVENTS) && defined (SDL_HINT_MOUSE_TOUCH_EVENTS)
     SDL_SetHint(SDL_HINT_TOUCH_MOUSE_EVENTS, "0");
-    SDL_SetHint(SDL_HINT_MOUSE_TOUCH_EVENTS, "0");
-#elif defined (SDL_HINT_ANDROID_SEPARATE_MOUSE_AND_TOUCH)
-    SDL_SetHint(SDL_HINT_ANDROID_SEPARATE_MOUSE_AND_TOUCH, "1");
-#endif
+    SDL_SetHint(SDL_HINT_MOUSE_TOUCH_EVENTS, "0");*/
+
     // TODO: setup these subsystems in config rather than keep hardcoded?
-    if (SDL_InitSubSystem(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_EVENTS) != 0) {
+    /*if (SDL_InitSubSystem(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_EVENTS) != 0) {
         Debug::Printf(kDbgMsg_Error, "Unable to initialize SDL: %s", SDL_GetError());
         return -1;
     }
     gl_SysMainInfo.SDLSubsystems =
-        SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_EVENTS;
+        SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_EVENTS;*/
     return 0;
 }
 
 void sys_main_shutdown() {
     sys_window_destroy();
     sys_audio_shutdown(); // in case it's still on
-    SDL_QuitSubSystem(gl_SysMainInfo.SDLSubsystems);
-    SDL_Quit();
+    /*SDL_QuitSubSystem(gl_SysMainInfo.SDLSubsystems);
+    SDL_Quit();*/
     gl_SysMainInfo.SDLSubsystems = 0u;
 }
 
@@ -74,18 +73,20 @@ void sys_set_background_mode(bool /*on*/) {
 const int DEFAULT_DISPLAY_INDEX = 0; // TODO: is this always right?
 
 int sys_get_desktop_resolution(int &width, int &height) {
-    SDL_Rect r;
+    //Amiga: sys_get_desktop_resolution not yet implemented
+    /*SDL_Rect r;
     if (SDL_GetDisplayBounds(DEFAULT_DISPLAY_INDEX, &r) != 0) {
         Debug::Printf(kDbgMsg_Error, "SDL_GetDisplayBounds failed: %s", SDL_GetError());
         return -1;
     }
     width = r.w;
-    height = r.h;
+    height = r.h;*/
     return 0;
 }
 
 void sys_get_desktop_modes(std::vector<AGS::Engine::DisplayMode> &dms, int color_depth) {
-    SDL_DisplayMode mode;
+    //Amiga: sys_get_desktop_resolution not yet implemented
+    /*SDL_DisplayMode mode;
     const int display_id = DEFAULT_DISPLAY_INDEX;
     const int count = SDL_GetNumDisplayModes(display_id);
     dms.clear();
@@ -104,12 +105,13 @@ void sys_get_desktop_modes(std::vector<AGS::Engine::DisplayMode> &dms, int color
         dm.ColorDepth = bitsdepth;
         dm.RefreshRate = mode.refresh_rate;
         dms.push_back(dm);
-    }
+    }*/
 }
 
 void sys_renderer_set_output(const String &name)
 {
-    SDL_SetHint(SDL_HINT_RENDER_DRIVER, name.GetCStr());
+    //Amiga: sys_renderer_set_output not yet implemented
+    //SDL_SetHint(SDL_HINT_RENDER_DRIVER, name.GetCStr());
 }
 
 
@@ -119,6 +121,8 @@ void sys_renderer_set_output(const String &name)
 
 bool sys_audio_init(const String &driver_name)
 {
+    //Amiga: sys_audio_init not yet implemented
+    /*
     if ((gl_SysMainInfo.SDLSubsystems & SDL_INIT_AUDIO) != 0)
         return true;
     // IMPORTANT: we must use a combination of SDL_setenv and SDL_InitSubSystem
@@ -150,16 +154,17 @@ bool sys_audio_init(const String &driver_name)
         Debug::Printf(kDbgMsg_Error, "Failed to initialize any audio driver; error: %s",
             SDL_GetError());
     gl_SysMainInfo.SDLSubsystems |= SDL_INIT_AUDIO * res;
-    return res;
+    return res;*/
 }
 
 void sys_audio_shutdown()
 {
+    //Amiga: sysaudioshutdown not yet implemented
     // Note: a subsystem that failed to initialize, doesn't increment ref-count
     // Additionally, we may not have init it at all, see engine_init_audio
-    if ((gl_SysMainInfo.SDLSubsystems & SDL_INIT_AUDIO) != 0)
+    /*if ((gl_SysMainInfo.SDLSubsystems & SDL_INIT_AUDIO) != 0)
         SDL_QuitSubSystem(SDL_INIT_AUDIO);
-    gl_SysMainInfo.SDLSubsystems &= ~SDL_INIT_AUDIO;
+    gl_SysMainInfo.SDLSubsystems &= ~SDL_INIT_AUDIO;*/
 }
 
 
@@ -167,9 +172,9 @@ void sys_audio_shutdown()
 // WINDOW UTILS
 // ----------------------------------------------------------------------------
 // TODO: support multiple windows? in case we need some for diag purposes etc
-static SDL_Window *window = nullptr;
+//static SDL_Window *window = nullptr;
 
-SDL_Window *sys_window_create(const char *window_title, int w, int h, WindowMode mode, int ex_flags) {
+/*SDL_Window *sys_window_create(const char *window_title, int w, int h, WindowMode mode, int ex_flags) {
     if (window) {
         sys_window_destroy();
     }
@@ -211,9 +216,11 @@ SDL_Window *sys_window_create(const char *window_title, int w, int h, WindowMode
 
 SDL_Window *sys_get_window() {
     return window;
-}
+}*/
 
 void sys_window_set_style(WindowMode mode, Size size) {
+    //Amiga: Syswindow not yet implemented
+    /*
     if (!window) return;
     if(mode != kWnd_Windowed && !platform->FullscreenSupported()) mode = kWnd_Windowed;
     // NOTE: depending on which mode we are switching to, the order of
@@ -237,7 +244,7 @@ void sys_window_set_style(WindowMode mode, Size size) {
     case kWnd_FullDesktop:
         SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
         break;
-    }
+    }*/
 }
 
 void sys_window_show_cursor(bool on) {
@@ -245,39 +252,46 @@ void sys_window_show_cursor(bool on) {
 }
 
 bool sys_window_lock_mouse(bool on) {
-    if (!window) return false;
+    //Amiga: Syswindowlockmouse not implemented
+    /*if (!window) return false;
     SDL_SetWindowGrab(window, static_cast<SDL_bool>(on));
-    return on; // TODO: test if successful?
+    return on; // TODO: test if successful?*/
 }
 
 void sys_window_set_mouse(int x, int y) {
-    if (!window) return;
-    SDL_WarpMouseInWindow(window, x, y);
+    //Amiga: sys_window_set_mouse not implemented
+    /*if (!window) return;
+    SDL_WarpMouseInWindow(window, x, y);*/
 }
 
 void sys_window_destroy() {
-    if (window) {
+    //Amiga: sys_window_destroy not implemented
+    /*if (window) {
         SDL_DestroyWindow(window);
         window = nullptr;
-    }
+    }*/
 }
 
 void sys_window_set_title(const char *title) {
-    if (window) {
+    //Amiga: sys_window_set_title not implemented
+    /*if (window) {
         SDL_SetWindowTitle(window, title);
-    }
+    }*/
 }
 
 void sys_window_set_icon() {
-    if (window) {
+    //Amiga: sys_window_set_icon not implemented
+    /*if (window) {
         SDL_Surface *icon = platform->CreateWindowIcon();
         if (!icon) return; // no icon
         SDL_SetWindowIcon(window, icon);
         SDL_FreeSurface(icon);
-    }
+    }*/
 }
 
 bool sys_window_set_size(int w, int h, bool center) {
+    //Amiga: sys_window_set_icon not implemented
+    /*        
     if (window) {
         SDL_SetWindowSize(window, w, h);
         if (center)
@@ -286,11 +300,13 @@ bool sys_window_set_size(int w, int h, bool center) {
         SDL_GetWindowSize(window, &new_w, &new_h);
         return new_w == w && new_h == h;
     }
+    */
     return false;
 }
 
 void sys_window_center() {
-    if (!window)
+    //Amiga: sys_window_center not implemented
+    /*if (!window)
         return;
 #if (AGS_PLATFORM_DESKTOP)
     // CHECKME:
@@ -311,17 +327,6 @@ void sys_window_center() {
     SDL_SetWindowPosition(window, x, y);
 #else // !AGS_PLATFORM_DESKTOP
     SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
-#endif
+#endif*/
 }
 
-#if AGS_PLATFORM_OS_WINDOWS
-void* sys_win_get_window()
-{
-    if (!window) return nullptr;
-    SDL_SysWMinfo wmInfo;
-    SDL_VERSION(&wmInfo.version);
-    SDL_GetWindowWMInfo(window, &wmInfo);
-    HWND hwnd = wmInfo.info.win.window;
-    return hwnd;
-}
-#endif
