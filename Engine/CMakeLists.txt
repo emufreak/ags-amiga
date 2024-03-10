@@ -434,8 +434,6 @@ target_sources(engine
 
     platform/linux/acpllnx.cpp
 
-    platform/android/acpland.cpp
-
     platform/emscripten/acpemscripten.cpp
 
     platform/bsd/acplbsd.cpp
