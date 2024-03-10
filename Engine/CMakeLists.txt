@@ -425,19 +425,8 @@ target_sources(engine
     util/library.h
     util/library_dummy.h
     util/library_posix.h
-    platform/windows/acplwin.cpp
-    platform/windows/debug/namedpipesagsdebugger.cpp
-    platform/windows/gfx/ali3dd3d.cpp
-    platform/windows/setup/winsetup.cpp
-    platform/windows/minidump.cpp
-    platform/windows/win_ex_handling.cpp
 
     platform/linux/acpllnx.cpp
-
-    platform/windows/win_ex_handling.cpp
-    platform/windows/win_ex_handling.h
-    platform/windows/minidump.cpp
-    platform/windows/winapi_exclusive.h
 
     platform/base/mobile_base.cpp
     platform/base/mobile_base.h
