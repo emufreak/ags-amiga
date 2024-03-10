@@ -434,10 +434,6 @@ target_sources(engine
 
     platform/linux/acpllnx.cpp
 
-    platform/emscripten/acpemscripten.cpp
-
-    platform/bsd/acplbsd.cpp
-
     platform/windows/win_ex_handling.cpp
     platform/windows/win_ex_handling.h
     platform/windows/minidump.cpp
