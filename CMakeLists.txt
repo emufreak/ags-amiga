@@ -305,7 +305,7 @@ endif()
 ###############################################################################
 # subdirectories of this project
 
-include(FindLocalOpenAL)
+
 include(FindLocalAllegro)
 
 add_subdirectory(libsrc/glm                     EXCLUDE_FROM_ALL)
