@@ -19,7 +19,6 @@
 #define __AGS_EE_MEDIA__SDLDECODER_H
 #include <memory>
 #include <vector>
-#include <SDL_sound.h>
 #include "util/stream.h"
 #include "util/string.h"
 #ifdef AUDIO_CORE_DEBUG
@@ -37,16 +36,17 @@ using AGS::Common::String;
 // RAII wrapper over SDL_Sound sample
 struct SoundSampleDeleterFunctor
 {
-    void operator()(Sound_Sample* p)
+    //Amiga: Sound Sample not implemented
+    /*void operator()(Sound_Sample* p)
     {
         Sound_FreeSample(p);
 #ifdef AUDIO_CORE_DEBUG
         AGS::Common::Debug::Printf("SoundSampleDeleterFunctor");
 #endif
-    }
+    }*/
 };
 
-using SoundSampleUniquePtr = std::unique_ptr<Sound_Sample, SoundSampleDeleterFunctor>;
+//using SoundSampleUniquePtr = std::unique_ptr<Sound_Sample, SoundSampleDeleterFunctor>;
 
 // A thin *non-owning* wrapper over a array containing constant sound data;
 // meant mostly to group and pass the buffer and associated parameters.
@@ -74,19 +74,19 @@ struct SDLResampler
 {
 public:
     SDLResampler() = default;
-    SDLResampler(SDL_AudioFormat src_fmt, int src_chans, int src_rate,
+    /*SDLResampler(SDL_AudioFormat src_fmt, int src_chans, int src_rate,
         SDL_AudioFormat dst_fmt, int dst_chans, int dst_rate)
     {
         Setup(src_fmt, src_chans, src_rate, dst_fmt, dst_chans, dst_rate);
-    }
+    }*/
     // Tells if conversion is necessary
-    bool HasConversion() const { return _cvt.needed > 0; }
+    bool HasConversion() const { return false; }
     // Setup a new conversion; returns whether setup has succeeded;
     // note that if no conversion necessary it still considered a success.
-    bool Setup(SDL_AudioFormat src_fmt, int src_chans, int src_rate,
-        SDL_AudioFormat dst_fmt, int dst_chans, int dst_rate);
-    bool Setup(const Sound_AudioInfo &src, const Sound_AudioInfo &dst)
-        { return Setup(src.format, src.channels, src.rate, dst.format, dst.channels, dst.rate); }
+    /*bool Setup(SDL_AudioFormat src_fmt, int src_chans, int src_rate,
+        SDL_AudioFormat dst_fmt, int dst_chans, int dst_rate);*/
+    /*bool Setup(const Sound_AudioInfo &src, const Sound_AudioInfo &dst)
+        { return Setup(src.format, src.channels, src.rate, dst.format, dst.channels, dst.rate); }*/
     // Converts given sound data, on success returns a read-only pointer to the
     // memory containing resulting data, and fills out_sz with output length value;
     // note that if no conversion is required it does not perform any operation
@@ -94,7 +94,7 @@ public:
     const void *Convert(const void *data, size_t sz, size_t &out_sz);
 
 private:
-    SDL_AudioCVT _cvt{};
+    //SDL_AudioCVT _cvt{};
     std::vector<uint8_t> _buf;
 };
 
@@ -111,13 +111,13 @@ public:
     ~SDLDecoder() = default;
 
     // Tells if the decoder is in a valid state, ready to work
-    bool IsValid() const { return _sample != nullptr; }
+    bool IsValid() const { return false; }
     // Gets the audio format
-    SDL_AudioFormat GetFormat() const { return _sample ? _sample->desired.format : 0; }
+    //SDL_AudioFormat GetFormat() const { return false; }
     // Gets the number of channels
-    int GetChannels() const { return _sample ? _sample->desired.channels : 0; }
+    int GetChannels() const { return false; }
     // Gets the audio rate (frequency)
-    int GetFreq() const { return _sample ? _sample->desired.rate : 0; }
+    int GetFreq() const { return false; }
     // Tells if the data reading has reached EOS
     bool EOS() const { return _EOS; }
     // Gets current reading position, in ms
@@ -135,10 +135,10 @@ public:
     SoundBuffer GetData();
 
 private:
-    SDL_RWops *_rwops = nullptr;
+    //SDL_RWops *_rwops = nullptr;
     std::shared_ptr<std::vector<uint8_t>> _sampleData{};
     String _sampleExt = "";
-    SoundSampleUniquePtr _sample = nullptr;
+    //SoundSampleUniquePtr _sample = nullptr;
     float _durationMs = 0.f;
     bool _repeat = false;
     bool _EOS = false;
@@ -150,19 +150,19 @@ private:
 namespace SoundHelper
 {
     // Tells bytes per sample from SDL_Audio format
-    inline size_t BytesPerSample(SDL_AudioFormat format) { return (SDL_AUDIO_BITSIZE(format) + 7) / 8; }
+    //inline size_t BytesPerSample(SDL_AudioFormat format) { return (SDL_AUDIO_BITSIZE(format) + 7) / 8; }
     // Calculate number of bytes of sound data per millisecond
-    inline size_t BytesPerMs(float ms, SDL_AudioFormat format, int chans, int freq)
+    /*inline size_t BytesPerMs(float ms, SDL_AudioFormat format, int chans, int freq)
     {
         return static_cast<size_t>(
             (static_cast<double>(ms) * SDL_AUDIO_BITSIZE(format) * chans * freq) / (8 * 1000));
-    }
+    }*/
     // Calculate number of milliseconds from given number of bytes of sound data
-    inline float MillisecondsFromBytes(size_t bytes, SDL_AudioFormat format, int chans, int freq)
+    /*inline float MillisecondsFromBytes(size_t bytes, SDL_AudioFormat format, int chans, int freq)
     {
         return static_cast<float>
             (static_cast<double>(bytes) * 8 * 1000) / (SDL_AUDIO_BITSIZE(format) * chans * freq);
-    }
+    }*/
 } // namespace SoundHelper
 
 } // namespace Engine

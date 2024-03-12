@@ -21,17 +21,18 @@ namespace Engine
 //-----------------------------------------------------------------------------
 // SDLResampler
 //-----------------------------------------------------------------------------
-bool SDLResampler::Setup(SDL_AudioFormat src_fmt, int src_chans, int src_rate,
+/*bool SDLResampler::Setup(SDL_AudioFormat src_fmt, int src_chans, int src_rate,
     SDL_AudioFormat dst_fmt, int dst_chans, int dst_rate)
 {
     SDL_zero(_cvt);
     return SDL_BuildAudioCVT(&_cvt, src_fmt, static_cast<uint8_t>(src_chans), src_rate,
         dst_fmt, static_cast<uint8_t>(dst_chans), dst_rate) >= 0;
-}
+}*/
 
 const void *SDLResampler::Convert(const void *data, size_t sz, size_t &out_sz)
 {
-    if (_cvt.needed == 0)
+    //Amiga Debug: SDLResampler::Convert not implemented
+    /*if (_cvt.needed == 0)
     { // no conversion necessary, return the input pointer
         out_sz = sz;
         return data;
@@ -48,7 +49,7 @@ const void *SDLResampler::Convert(const void *data, size_t sz, size_t &out_sz)
     if (SDL_ConvertAudio(&_cvt) < 0)
         return nullptr;
     out_sz = _cvt.len_cvt;
-    return &_buf[0];
+    return &_buf[0];*/
 }
 
 //-----------------------------------------------------------------------------
