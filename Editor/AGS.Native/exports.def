@@ -1,3 +1,0 @@
-LIBRARY AGS.Native
-EXPORTS
-   Scintilla_DirectFunction   @1
