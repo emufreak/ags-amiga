@@ -21,4 +21,4 @@ Approach
 
 ## Current State
 
-Atm the whole source code compiles on Linux and it's just a maimed version of the Original AGS source where a lot of the SDL Library calls were removed already (Part 1 as described above)
+Atm this branch is trying to make the whole thing amiga compatible. Files are moved one by one from the main branch to get a compilable version of the "headless" engine that was created in master. This way we end up only with the files we need.
