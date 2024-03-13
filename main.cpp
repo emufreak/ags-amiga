@@ -11,7 +11,6 @@
 #include <hardware/intbits.h>
 
 //config
-#define MUSIC
 
 struct ExecBase *SysBase;
 volatile struct Custom *custom;
@@ -187,53 +186,6 @@ void* doynaxdepack(const void* input, void* output) { // returns end of output d
 	return (void*)_a1;
 }
 
-#ifdef MUSIC
-	// Demo - Module Player - ThePlayer 6.1a: https://www.pouet.net/prod.php?which=19922
-	// The Player® 6.1A: Copyright © 1992-95 Jarno Paananen
-	// P61.testmod - Module by Skylord/Sector 7 
-	INCBIN(player, "player610.6.no_cia.bin")
-	INCBIN_CHIP(module, "testmod.p61")
-
-	int p61Init(const void* module) { // returns 0 if success, non-zero otherwise
-		register volatile const void* _a0 ASM("a0") = module;
-		register volatile const void* _a1 ASM("a1") = NULL;
-		register volatile const void* _a2 ASM("a2") = NULL;
-		register volatile const void* _a3 ASM("a3") = player;
-		register                int   _d0 ASM("d0"); // return value
-		__asm volatile (
-			"movem.l %%d1-%%d7/%%a4-%%a6,-(%%sp)\n"
-			"jsr 0(%%a3)\n"
-			"movem.l (%%sp)+,%%d1-%%d7/%%a4-%%a6"
-		: "=r" (_d0), "+rf"(_a0), "+rf"(_a1), "+rf"(_a2), "+rf"(_a3)
-		:
-		: "cc", "memory");
-		return _d0;
-	}
-
-	void p61Music() {
-		register volatile const void* _a3 ASM("a3") = player;
-		register volatile const void* _a6 ASM("a6") = (void*)0xdff000;
-		__asm volatile (
-			"movem.l %%d0-%%d7/%%a0-%%a2/%%a4-%%a5,-(%%sp)\n"
-			"jsr 4(%%a3)\n"
-			"movem.l (%%sp)+,%%d0-%%d7/%%a0-%%a2/%%a4-%%a5"
-		: "+rf"(_a3), "+rf"(_a6)
-		:
-		: "cc", "memory");
-	}
-
-	void p61End() {
-		register volatile const void* _a3 ASM("a3") = player;
-		register volatile const void* _a6 ASM("a6") = (void*)0xdff000;
-		__asm volatile (
-			"movem.l %%d0-%%d1/%%a0-%%a1,-(%%sp)\n"
-			"jsr 8(%%a3)\n"
-			"movem.l (%%sp)+,%%d0-%%d1/%%a0-%%a1"
-		: "+rf"(_a3), "+rf"(_a6)
-		:
-		: "cc", "memory");
-	}
-#endif //MUSIC
 
 __attribute__((always_inline)) inline USHORT* copSetPlanes(UBYTE bplPtrStart,USHORT* copListEnd,const UBYTE **planes,int numPlanes) {
 	for (USHORT i=0;i<numPlanes;i++) {
@@ -301,18 +253,6 @@ static const UBYTE sinus32[] = {
 static __attribute__((interrupt)) void interruptHandler() {
 	custom->intreq=(1<<INTB_VERTB); custom->intreq=(1<<INTB_VERTB); //reset vbl req. twice for a4000 bug.
 
-	// modify scrolling in copper list
-	if(scroll) {
-		int sin = sinus15[frameCounter & 63];
-		*scroll = sin | (sin << 4);
-	}
-
-#ifdef MUSIC
-	// DEMO - ThePlayer
-	p61Music();
-#endif
-	// DEMO - increment frameCounter
-	frameCounter++;
 }
 
 #ifdef __cplusplus
@@ -383,10 +323,7 @@ int main() {
 
 	warpmode(1);
 	// TODO: precalc stuff here
-#ifdef MUSIC
-	if(p61Init(module) != 0)
-		KPrintF("p61Init failed!\n");
-#endif
+
 	warpmode(0);
 
 	TakeSystem();
@@ -397,106 +334,21 @@ int main() {
 	memclr(test + 2, 2502 - 4);
 	FreeMem(test, 2502);
 
-	USHORT* copper1 = (USHORT*)AllocMem(1024, MEMF_CHIP);
-	USHORT* copPtr = copper1;
-
 	// register graphics resources with WinUAE for nicer gfx debugger experience
-	debug_register_bitmap(image, "image.bpl", 320, 256, 5, debug_resource_bitmap_interleaved);
+	/*debug_register_bitmap(image, "image.bpl", 320, 256, 5, debug_resource_bitmap_interleaved);
 	debug_register_bitmap(bob, "bob.bpl", 32, 96, 5, debug_resource_bitmap_interleaved | debug_resource_bitmap_masked);
 	debug_register_palette(colors, "image.pal", 32, 0);
 	debug_register_copperlist(copper1, "copper1", 1024, 0);
-	debug_register_copperlist(copper2, "copper2", sizeof(copper2), 0);
-
-	copPtr = screenScanDefault(copPtr);
-	//enable bitplanes	
-	*copPtr++ = offsetof(struct Custom, bplcon0);
-	*copPtr++ = (0<<10)/*dual pf*/|(1<<9)/*color*/|((5)<<12)/*num bitplanes*/;
-	*copPtr++ = offsetof(struct Custom, bplcon1);	//scrolling
-	scroll = copPtr;
-	*copPtr++ = 0;
-	*copPtr++ = offsetof(struct Custom, bplcon2);	//playfied priority
-	*copPtr++ = 1<<6;//0x24;			//Sprites have priority over playfields
-
-	const USHORT lineSize=320/8;
-
-	//set bitplane modulo
-	*copPtr++=offsetof(struct Custom, bpl1mod); //odd planes   1,3,5
-	*copPtr++=4*lineSize;
-	*copPtr++=offsetof(struct Custom, bpl2mod); //even  planes 2,4
-	*copPtr++=4*lineSize;
-
-	// set bitplane pointers
-	const UBYTE* planes[5];
-	for(int a=0;a<5;a++)
-		planes[a]=(UBYTE*)image + lineSize * a;
-	copPtr = copSetPlanes(0, copPtr, planes, 5);
-
-	// set colors
-	for(int a=0; a < 32; a++)
-		copPtr = copSetColor(copPtr, a, ((USHORT*)colors)[a]);
-
-	// jump to copper2
-	*copPtr++ = offsetof(struct Custom, copjmp2);
-	*copPtr++ = 0x7fff;
-
-	custom->cop1lc = (ULONG)copper1;
-	custom->cop2lc = (ULONG)copper2;
-	custom->dmacon = DMAF_BLITTER;//disable blitter dma for copjmp bug
-	custom->copjmp1 = 0x7fff; //start coppper
-	custom->dmacon = DMAF_SETCLR | DMAF_MASTER | DMAF_RASTER | DMAF_COPPER | DMAF_BLITTER;
+	debug_register_copperlist(copper2, "copper2", sizeof(copper2), 0);*/
 
 	// DEMO
 	SetInterruptHandler((APTR)interruptHandler);
 	custom->intena = INTF_SETCLR | INTF_INTEN | INTF_VERTB;
-#ifdef MUSIC
-	custom->intena = INTF_SETCLR | INTF_EXTER; // ThePlayer needs INTF_EXTER
-#endif
 
 	custom->intreq=(1<<INTB_VERTB);//reset vbl req
 
 	while(!MouseLeft()) {
-		Wait10();
-		int f = frameCounter & 255;
-
-		// clear
-		WaitBlit();
-		custom->bltcon0 = A_TO_D | DEST;
-		custom->bltcon1 = 0;
-		custom->bltadat = 0;
-		custom->bltdpt = (UBYTE*)image + 320 / 8 * 200 * 5;
-		custom->bltdmod = 0;
-		custom->bltafwm = custom->bltalwm = 0xffff;
-		custom->bltsize = ((56 * 5) << HSIZEBITS) | (320/16);
-
-		// blit
-		for(short i = 0; i < 16; i++) {
-			const short x = i * 16 + sinus32[(frameCounter + i) % sizeof(sinus32)] * 2;
-			const short y = sinus40[((frameCounter + i) * 2) & 63] / 2;
-			UBYTE* src = (UBYTE*)bob + 32 / 8 * 10 * 16 * (i % 6);
-
-			WaitBlit();
-			custom->bltcon0 = 0xca | SRCA | SRCB | SRCC | DEST | ((x & 15) << ASHIFTSHIFT); // A = source, B = mask, C = background, D = destination
-			custom->bltcon1 = ((x & 15) << BSHIFTSHIFT);
-			custom->bltapt = src;
-			custom->bltamod = 32 / 8;
-			custom->bltbpt = src + 32 / 8 * 1;
-			custom->bltbmod = 32 / 8;
-			custom->bltcpt = custom->bltdpt = (UBYTE*)image + 320 / 8 * 5 * (200 + y) + x / 8;
-			custom->bltcmod = custom->bltdmod = (320 - 32) / 8;
-			custom->bltafwm = custom->bltalwm = 0xffff;
-			custom->bltsize = ((16 * 5) << HSIZEBITS) | (32/16);
-		}
-
-		// WinUAE debug overlay test
-		debug_clear();
-		debug_filled_rect(f + 100, 200*2, f + 400, 220*2, 0x0000ff00); // 0x00RRGGBB
-		debug_rect(f + 90, 190*2, f + 400, 220*2, 0x000000ff); // 0x00RRGGBB
-		debug_text(f+ 130, 209*2, "This is a WinUAE debug overlay", 0x00ff00ff);
 	}
-
-#ifdef MUSIC
-	p61End();
-#endif
 
 	// END
 	FreeSystem();
