@@ -21,4 +21,4 @@ Approach
 
 ## Current State
 
-Atm the whole source code compiles on Linux and it's just a maimed version of the Original AGS source where a lot of the SDL Library calls were removed already (Part 1 as described above)
+Atm the whole source code compiles on Linux and it's just a maimed version of the Original AGS source where a lot of the SDL Library calls were removed already (Part 1d afs described above)
