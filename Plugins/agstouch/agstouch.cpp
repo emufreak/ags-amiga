@@ -18,8 +18,6 @@ Helper functions for touch devices
 
 #include "plugin/agsplugin.h"
 
-#include <SDL.h>
-
 #if defined(BUILTIN_PLUGINS)
 namespace agstouch {
 #endif

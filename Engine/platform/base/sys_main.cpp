@@ -12,7 +12,6 @@
 //
 //=============================================================================
 #include "platform/base/sys_main.h"
-#include <SDL_syswm.h>
 #include "debug/out.h"
 #include "platform/base/agsplatformdriver.h"
 #include "util/geometry.h"

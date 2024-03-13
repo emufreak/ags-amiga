@@ -264,47 +264,6 @@ if(AGS_TESTS)
     enable_testing()
 endif()
 
-###############################################################################
-# dependencies we download the source or not depending on settings
-
-if(NOT AGS_USE_LOCAL_SDL2 AND NOT EMSCRIPTEN)
-    include(FetchSDL2)
-else()
-    find_package(SDL2 REQUIRED)
-    include_directories("${SDL2_INCLUDE_DIRS}")
-endif()
-
-if(NOT AGS_USE_LOCAL_SDL2_SOUND)
-    include(FetchSDL_Sound)
-else()
-    find_package(SDL2_sound REQUIRED)
-endif()
-
-if(EMSCRIPTEN)
-    # do nothing
-elseif(NOT AGS_USE_LOCAL_OGG)
-    include(FetchOgg)
-else()
-    find_package(Ogg REQUIRED)
-endif()
-
-if(EMSCRIPTEN)
-    # do nothing
-elseif (NOT AGS_USE_LOCAL_VORBIS)
-    include(FetchVorbis)
-else()
-    find_package(Vorbis REQUIRED)
-endif()
-
-if (NOT AGS_USE_LOCAL_THEORA)
-    include(FetchTheora)
-else()
-    find_package(Theora REQUIRED)
-endif()
-
-###############################################################################
-# subdirectories of this project
-
 
 include(FindLocalAllegro)
 
