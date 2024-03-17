@@ -21,13 +21,13 @@
 #ifndef __AGS_CN_AC__SPRFILE_H
 #define __AGS_CN_AC__SPRFILE_H
 
-#include <memory>
-#include <vector>
-#include "core/types.h"
-#include "util/error.h"
-#include "util/geometry.h"
-#include "util/stream.h"
-#include "util/string.h"
+/*#include <memory>
+#include <vector>*/
+#include "Common/core/types.h"
+#include "Common/util/error.h"
+#include "Common/util/geometry.h"
+#include "Common/util/stream.h"
+#include "Common/util/string.h"
 
 
 namespace AGS

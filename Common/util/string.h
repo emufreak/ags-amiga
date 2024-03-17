@@ -38,12 +38,9 @@
 #ifndef __AGS_CN_UTIL__STRING_H
 #define __AGS_CN_UTIL__STRING_H
 
-#include <stdarg.h>
-#include <vector>
-#include <string>
-#include "core/platform.h"
-#include "core/types.h"
-#include "debug/assert.h"
+#include "Common/core/platform.h"
+#include "Common/core/types.h"
+#include "Common/debug/assert.h"
 
 namespace AGS
 {

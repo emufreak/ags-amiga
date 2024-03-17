@@ -14,11 +14,11 @@
 #ifndef __AC_CHARACTERINFO_H
 #define __AC_CHARACTERINFO_H
 
-#include <vector>
-#include "core/types.h"
-#include "ac/common_defines.h" // constants
-#include "ac/game_version.h"
-#include "util/bbop.h"
+//#include <vector>
+#include "Common/core/types.h"
+#include "Common/ac/common_defines.h" // constants
+#include "Common/ac/game_version.h"
+#include "Comomon/util/bbop.h"
 
 namespace AGS { namespace Common { class Stream; } }
 using namespace AGS; // FIXME later

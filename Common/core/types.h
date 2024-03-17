@@ -18,9 +18,10 @@
 #ifndef __AGS_CN_CORE__TYPES_H
 #define __AGS_CN_CORE__TYPES_H
 
-#include <stddef.h> // for size_t
+/*#include <stddef.h> // for size_t
 #include <stdint.h>
-#include <limits.h> // for _WORDSIZE
+#include <limits.h> // for _WORDSIZE*/
+#include <proto/exec.h>
 
 #ifndef NULL
 #define NULL nullptr
@@ -45,7 +46,7 @@
 #endif
 
 // Stream offset type
-typedef int64_t soff_t;
+typedef ULONG soff_t;
 
 #define fixed_t int32_t // fixed point type
 #define color_t int32_t

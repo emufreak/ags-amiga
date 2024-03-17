@@ -14,10 +14,10 @@
 #ifndef __AC_GAMESTATE_H
 #define __AC_GAMESTATE_H
 
-#include <memory>
+/*#include <memory>
 #include <vector>
-#include <unordered_set>
-#include "ac/characterinfo.h"
+#include <unordered_set>*/
+#include "Common/ac/characterinfo.h"
 #include "ac/characterextras.h"
 #include "ac/keycode.h"
 #include "ac/movelist.h"

@@ -9,7 +9,7 @@ endif
 
 subdirs := $(wildcard */)
 VPATH = $(subdirs)
-cpp_sources := $(wildcard *.cpp) $(wildcard $(addsuffix *.cpp,$(subdirs)))
+cpp_sources := $(wildcard *.cpp) $(wildcard Engine/main/*.cpp) $(wildcard $(addsuffix *.cpp,$(subdirs)))
 cpp_objects := $(addprefix obj/,$(patsubst %.cpp,%.o,$(notdir $(cpp_sources))))
 c_sources := $(wildcard *.c) $(wildcard $(addsuffix *.c,$(subdirs)))
 c_objects := $(addprefix obj/,$(patsubst %.c,%.o,$(notdir $(c_sources))))
